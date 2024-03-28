@@ -1,5 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 :root {
   --font: Helvetica;
+
+  --color-1: #23f0c7;
+  --color-2: #006d77;
+  --color-3: #3c3744;
 }
 
 * {
@@ -9,6 +17,10 @@
   padding: 0;
 
   border-radius: 0.4rem;
+}
+
+body {
+  background-color: var(--color-3);
 }
 
 #root {

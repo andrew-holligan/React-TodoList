@@ -1,11 +1,9 @@
-import './Home.css';
-
 function Home() {
   return (
     <>
         <header>
             <h1>TodoList</h1>
-            <h3>Create A TodoList!</h3>
+            <h3>Create a TodoList!</h3>
         </header>
 
         <main>
