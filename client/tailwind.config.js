@@ -11,10 +11,12 @@ export default {
     extend: {
       backgroundImage: {
         "create-todolist": "url('./src/assets/icon-create-todolist.svg')",
+        add: "url('./src/assets/icon-add.svg')",
       },
       backgroundSize: {
         "75%": "75%",
         16: "4rem",
+        8: "2rem",
       },
     },
   },
