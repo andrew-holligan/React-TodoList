@@ -1,10 +1,12 @@
 import {useState} from 'react';
+import {json, useNavigate} from 'react-router-dom';
 
 import Header from '../components/Header.tsx';
 import Footer from '../components/Footer.tsx';
 import Item from '../components/Item.tsx';
 
 function Create() {
+    const navigate = useNavigate();
     const [items, setItems] = useState<string[]>([]);
 
     function addItem() {
@@ -20,6 +22,37 @@ function Create() {
     function deleteItem(index: number){
         const newItems = items.filter((item, i) => i !== index);
         setItems(newItems);
+    }
+
+    async function create() {
+        const name = (document.getElementById('name') as HTMLInputElement).value.trim();
+
+        // validation
+        if (!name) {
+            alert("Error - Name is required!")
+            return;
+        }
+        if (items.length === 0) {
+            alert("Error - Items are required!")
+            return;
+        }
+
+        await fetch('http://localhost:5000/create', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                name,
+                items
+            })
+        })
+        .then(() => {
+            navigate("/");
+        })
+        .catch((error) => {
+            console.error(error);
+        });
     }
 
     const itemsList = items.map((item, index) => {
@@ -79,7 +112,7 @@ function Create() {
                     {itemsList}
                 </ol>
   
-                <button id="btn-create"
+                <button id="btn-create" onClick={create}
                     className="
                         flex justify-center items-center
                         w-80 h-12

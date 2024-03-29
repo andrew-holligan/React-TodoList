@@ -1,7 +1,20 @@
 import Header from '../components/Header.tsx';
 import Footer from '../components/Footer.tsx';
 
+async function getTodoLists(): Promise<Object> {
+    return await fetch('http://localhost:5000/', {
+        method: 'GET',
+    })
+    .then((response) => {
+        return response.json();
+    })
+    .catch((error) => {
+        console.error(error);
+    }); 
+}
+
 function Home() {
+
     return (
         <>
             <Header />

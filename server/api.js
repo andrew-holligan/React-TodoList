@@ -1,28 +1,35 @@
-import { express } from "express";
+import express from "express";
+import cors from "cors";
 
 import { DB } from "./db.js";
 
 const COLLECTION_NAME = "todolists";
 
 const app = express();
+app.use(cors());
+app.use(express.json());
+app.options("*", cors());
 
 // 'home' route
 app
-  .route("/")
   // GET request
   // get all todolists
-  .get((req, res) => {
+  .get("/", (req, res) => {
+    console.log("GET /");
     const todolists = DB.getDocuments(COLLECTION_NAME);
     res.json(todolists);
   });
 
 // 'create' route
 app
-  .route("/create")
   // POST request
   // create a new todolist
-  .post((req, res) => {
+  .post("/create", (req, res) => {
+    console.log("POST /create");
     const todolist = req.body;
+    console.log(todolist);
     DB.addDocument(COLLECTION_NAME, todolist);
-    res.json(todolist);
+    res.sendStatus(200);
   });
+
+export default app;

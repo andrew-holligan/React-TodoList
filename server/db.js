@@ -13,6 +13,8 @@ export class DB {
       const collection = db.collection(collectionName);
       const result = collection.find({});
       return result;
+    } catch (error) {
+      console.error(error);
     } finally {
       await client.close();
     }
@@ -25,6 +27,8 @@ export class DB {
       const collection = db.collection(collectionName);
       const result = collection.find(query);
       return result;
+    } catch (error) {
+      console.error(error);
     } finally {
       await client.close();
     }
@@ -35,7 +39,9 @@ export class DB {
       await client.connect();
       const db = client.db("react-todolist");
       const collection = db.collection(collectionName);
-      collection.insertOne(document);
+      await collection.insertOne(document);
+    } catch (error) {
+      console.error(error);
     } finally {
       await client.close();
     }
