@@ -7,13 +7,22 @@ function Create() {
     const [items, setItems] = useState<string[]>([]);
 
     function addItem() {
-        const item = (document.getElementById('item') as HTMLInputElement).value;
+        const item = (document.getElementById('item') as HTMLInputElement).value.trim();
+
+        // check for empty input
+        if (!item) return;
+
         setItems([...items, item]);
         (document.getElementById('item') as HTMLInputElement).value = '';
     }
 
+    function deleteItem(index: number){
+        const newItems = items.filter((item, i) => i !== index);
+        setItems(newItems);
+    }
+
     const itemsList = items.map((item, index) => {
-        return <Item value={item} key={index} />;
+        return <Item value={item} onDelete={deleteItem} index={index} key={index} />;
     });
 
     return (
