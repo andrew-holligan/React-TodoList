@@ -1,6 +1,7 @@
 import {useState} from 'react';
 
 import Header from '../components/Header.tsx';
+import Footer from '../components/Footer.tsx';
 import Item from '../components/Item.tsx';
 
 function Create() {
@@ -29,7 +30,7 @@ function Create() {
         <>
             <Header />
 
-            <main className="flex flex-col gap-8 w-full">
+            <main className="flex flex-col items-center gap-8 w-full">
 
                 <div className="
                     flex flex-col items-center 
@@ -78,9 +79,19 @@ function Create() {
                     {itemsList}
                 </ol>
   
-                {/* <button id="btn-save">Save</button> */}
+                <button id="btn-create"
+                    className="
+                        flex justify-center items-center
+                        w-80 h-12
+                        bg-color1 hover:bg-color2
+                        text-color4"
+                >
+                    Create
+                </button>
 
             </main>
+
+            <Footer />
         </>
     )
   }
