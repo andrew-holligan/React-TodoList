@@ -71,7 +71,10 @@ function Create() {
                     </div>
                 </div>
 
-                <ol>
+                <ol className="
+                    flex flex-row justify-center flex-wrap 
+                    w-full px-20 gap-8
+                ">
                     {itemsList}
                 </ol>
   
