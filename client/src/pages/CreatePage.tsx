@@ -1,11 +1,13 @@
 import {useState} from 'react';
-import {json, useNavigate} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
+
+import {API} from '../util/api.js';
 
 import Header from '../components/Header.tsx';
 import Footer from '../components/Footer.tsx';
 import Item from '../components/Item.tsx';
 
-function Create() {
+function CreatePage() {
     const navigate = useNavigate();
     const [items, setItems] = useState<string[]>([]);
 
@@ -37,25 +39,12 @@ function Create() {
             return;
         }
 
-        await fetch('http://localhost:5000/create', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                name,
-                items
-            })
-        })
-        .then(() => {
+        API.createTodoList(name, items).then(() => {
             navigate("/");
-        })
-        .catch((error) => {
-            console.error(error);
         });
     }
 
-    const itemsList = items.map((item, index) => {
+    const itemElts = items.map((item, index) => {
         return <Item value={item} onDelete={deleteItem} index={index} key={index} />;
     });
 
@@ -109,7 +98,7 @@ function Create() {
                     flex flex-row justify-center flex-wrap 
                     w-full px-20 gap-8
                 ">
-                    {itemsList}
+                    {itemElts}
                 </ol>
   
                 <button id="btn-create" onClick={create}
@@ -129,4 +118,4 @@ function Create() {
     )
   }
   
-  export default Create
+  export default CreatePage

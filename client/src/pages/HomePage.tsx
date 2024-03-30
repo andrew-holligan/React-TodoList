@@ -1,39 +1,24 @@
 import {useState,useEffect} from 'react';
 
+import {API} from '../util/api.ts';
+import type {TodoListType} from '../util/types.ts';
+
 import Header from '../components/Header.tsx';
 import Footer from '../components/Footer.tsx';
 
-interface TodoList {
-    _id: string;
-    name: string;
-    items: string[];
-}
-
-async function getTodoLists() {
-    return await fetch('http://localhost:5000/', {
-        method: 'GET',
-    })
-    .then((response) => {
-        return response.json();
-    })
-    .catch((error) => {
-        console.error(error);
-    }); 
-}
-
-function Home() {
-    const [todoLists, setTodoLists] = useState<TodoList[]>([]);
+function HomePage() {
+    const [todoLists, setTodoLists] = useState<TodoListType[]>([]);
 
     useEffect(() => {
-        getTodoLists().then((data) => {
+        API.getTodoLists().then((data) => {
             setTodoLists(data);
         });
     }, []);
 
-    const todoListsElts = todoLists.map((todoList) => {
+    const todoListElts = todoLists.map((todoList) => {
         return (
             <li key={todoList._id}>
-                <a href=""
+                <a href={"/todolist/" + todoList._id}
                     className="
                     flex justify-center items-center
                     w-80 h-20 
@@ -68,7 +53,7 @@ function Home() {
                         </a>
                     </li>
 
-                    {todoListsElts}
+                    {todoListElts}
 
                 </ul>
 
@@ -79,4 +64,4 @@ function Home() {
     )
   }
   
-  export default Home
+  export default HomePage

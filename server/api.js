@@ -16,8 +16,8 @@ app
   // get all todolists
   .get("/", (req, res) => {
     console.log("GET /");
+
     DB.getDocuments(COLLECTION_NAME).then((result) => {
-      console.log(result);
       res.json(result);
     });
   });
@@ -28,10 +28,25 @@ app
   // create a new todolist
   .post("/create", (req, res) => {
     console.log("POST /create");
+
     const todolist = req.body;
-    console.log(todolist);
-    DB.addDocument(COLLECTION_NAME, todolist);
-    res.sendStatus(200);
+    DB.addDocument(COLLECTION_NAME, todolist).then(() => {
+      res.sendStatus(200);
+    });
+  });
+
+// 'todolist' route
+app
+  // GET request
+  // get a specific todolist
+  .get("/todolist/:id", (req, res) => {
+    console.log("GET /todolist/:id");
+
+    const id = req.params.id;
+    DB.getDocument(COLLECTION_NAME, id).then((result) => {
+      console.log(result);
+      res.json(result);
+    });
   });
 
 export default app;
