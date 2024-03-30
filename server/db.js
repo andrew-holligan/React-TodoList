@@ -1,7 +1,9 @@
+import dotenv from "dotenv";
+dotenv.config();
+
 import { MongoClient, ObjectId } from "mongodb";
 
-const uri =
-  "mongodb+srv://***REMOVED***:***REMOVED***@cluster0.vmsxqbo.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+const uri = `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@cluster0.vmsxqbo.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
 
 export class DB {
   static async getDocuments(collectionName, query = {}) {
