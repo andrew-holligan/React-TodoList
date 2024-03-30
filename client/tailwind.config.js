@@ -10,10 +10,10 @@ export default {
     },
     extend: {
       backgroundImage: {
-        "create-todolist": "url('./src/assets/icon-create-todolist.svg')",
-        add: "url('./src/assets/icon-add.svg')",
-        delete: "url('./src/assets/icon-delete.svg')",
-        tick: "url('./src/assets/icon-tick.svg')",
+        "create-todolist": "url('/icon-create-todolist.svg')",
+        add: "url('/icon-add.svg')",
+        delete: "url('/icon-delete.svg')",
+        tick: "url('/icon-tick.svg')",
       },
       backgroundSize: {
         "75%": "75%",
