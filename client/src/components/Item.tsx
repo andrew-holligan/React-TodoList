@@ -10,7 +10,7 @@ function Item({value, onDelete, onTick, index, tick}: {value: string, onDelete: 
     return (
         <li className="
             flex flex-row justify-between items-center 
-            w-80 h-12 
+            min-w-80 h-12 
             bg-color1
             text-color4 px-4
         ">

@@ -56,6 +56,18 @@ export class API {
       });
   }
 
+  static async deleteTodoList(id: string): Promise<any> {
+    await fetch("http://localhost:5000/todolist/" + id, {
+      method: "DELETE",
+    })
+      .then((response) => {
+        return response;
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
+
   static async setItemTick(id: string, index: number, tick: boolean): Promise<any> {
     await fetch("http://localhost:5000/todolist/" + id + "/" + index, {
       method: "POST",

@@ -52,6 +52,19 @@ app
 // 'delete' route
 app
   // DELETE request
+  // delete a specific todolist
+  .delete("/todolist/:id", (req, res) => {
+    console.log("DELETE /todolist/:id");
+
+    const id = req.params.id;
+    DB.deleteTodoList(COLLECTION_NAME, id).then(() => {
+      res.sendStatus(200);
+    });
+  });
+
+// 'delete' route
+app
+  // DELETE request
   // delete a specific item
   .delete("/todolist/:id/:itemIndex", (req, res) => {
     console.log("DELETE /todolist/:id/:index (ITEM)");

@@ -19,6 +19,7 @@ export class DB {
         .toArray();
 
       return result;
+      
     } catch (error) {
       console.error(error);
     } finally {
@@ -44,6 +45,29 @@ export class DB {
         .db("react-todolist")
         .collection(collectionName)
         .insertOne(document);
+
+    } catch (error) {
+      console.error(error);
+    } finally {
+      await client.close();
+    }
+  }
+
+  static async deleteTodoList(collectionName, id) {
+    const client = new MongoClient(uri);
+
+    const query = {
+      _id: ObjectId.createFromHexString(id),
+    };
+
+    try {
+      await client.connect();
+
+      await client
+        .db("react-todolist")
+        .collection(collectionName)
+        .deleteOne(query);
+
     } catch (error) {
       console.error(error);
     } finally {
@@ -70,6 +94,7 @@ export class DB {
         .db("react-todolist")
         .collection(collectionName)
         .updateOne(query, { $pull: { items: null } });
+
     } catch (error) {
       console.error(error);
     } finally {
@@ -91,6 +116,7 @@ export class DB {
         .db("react-todolist")
         .collection(collectionName)
         .updateOne(query, { $set: { [`items.${itemIndex}.ticked`]: tick } });
+
     } catch (error) {
       console.error(error);
     } finally {

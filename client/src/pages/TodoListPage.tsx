@@ -1,4 +1,4 @@
-import {useParams} from 'react-router-dom';
+import {useParams,useNavigate} from 'react-router-dom';
 import {useState,useEffect} from 'react';
 
 import {API} from '../util/api.ts';
@@ -9,6 +9,7 @@ import Footer from '../components/Footer.tsx';
 import Item from '../components/Item.tsx';
 
 function TodoListPage() {
+    const navigate = useNavigate();
     const {id} = useParams();
     const [name, setName] = useState<string>('');
     const [items, setItems] = useState<ItemType[]>([]);
@@ -23,6 +24,12 @@ function TodoListPage() {
     }, []);
 
     // HANDLERS
+
+    function deleteTodoList() {
+        API.deleteTodoList(id!).then(() => {
+            navigate('/');
+        });
+    }
 
     function deleteItem(index: number){
         const newItems = items.filter((item, i) => i !== index);
@@ -58,7 +65,15 @@ function TodoListPage() {
 
             <main className="flex flex-col items-center gap-8 w-full">
 
-                <h1 className="text-center text-4xl text-color1 my-8">{name}</h1>
+                <header className="flex items-center justify-center my-8">
+                    <h1 className="text-4xl text-color1 mr-4">{name}</h1>
+                    <button onClick={deleteTodoList} 
+                        className="
+                            w-8 h-8 
+                            bg-delete bg-no-repeat bg-center bg-contain bg-[#FF0000]
+                    ">
+                    </button>
+                </header>
 
                 <ol className="
                     flex flex-row justify-center flex-wrap 
