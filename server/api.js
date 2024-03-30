@@ -49,4 +49,34 @@ app
     });
   });
 
+// 'delete' route
+app
+  // DELETE request
+  // delete a specific item
+  .delete("/todolist/:id/:itemIndex", (req, res) => {
+    console.log("DELETE /todolist/:id/:index (ITEM)");
+
+    const id = req.params.id;
+    const itemIndex = req.params.itemIndex;
+    DB.deleteItem(COLLECTION_NAME, id, itemIndex).then(() => {
+      res.sendStatus(200);
+    });
+  });
+
+// 'tick' route
+app
+  // POST request
+  // set tick of specific item in a specific todolist
+  .post("/todolist/:id/:itemIndex", (req, res) => {
+    console.log("POST /todolist/:id/:itemIndex (TICK)");
+
+    const id = req.params.id;
+    const itemIndex = req.params.itemIndex;
+    const { tick } = req.body;
+
+    DB.setTick(COLLECTION_NAME, id, itemIndex, tick).then(() => {
+      res.sendStatus(200);
+    });
+  });
+
 export default app;

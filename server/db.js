@@ -50,4 +50,56 @@ export class DB {
       await client.close();
     }
   }
+
+  static async deleteItem(collectionName, id, itemIndex) {
+    const client = new MongoClient(uri);
+
+    const query = {
+      _id: ObjectId.createFromHexString(id),
+    };
+
+    try {
+      await client.connect();
+
+      await client
+        .db("react-todolist")
+        .collection(collectionName)
+        .updateOne(query, { $unset: { [`items.${itemIndex}`]: 1 } });
+
+      await client
+        .db("react-todolist")
+        .collection(collectionName)
+        .updateOne(query, { $pull: { items: null } });
+    } catch (error) {
+      console.error(error);
+    } finally {
+      await client.close();
+    }
+  }
+
+  static async setTick(collectionName, id, itemIndex, tick) {
+    const client = new MongoClient(uri);
+
+    const query = {
+      _id: ObjectId.createFromHexString(id),
+    };
+    const update = {
+      $set: {
+        [`items.${itemIndex}.tick`]: tick,
+      },
+    };
+
+    try {
+      await client.connect();
+
+      await client
+        .db("react-todolist")
+        .collection(collectionName)
+        .update(query, update);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      await client.close();
+    }
+  }
 }

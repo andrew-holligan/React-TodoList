@@ -1,13 +1,9 @@
-import {useState} from 'react';
+import {useEffect} from 'react';
 
-function Item({value, onDelete, index}: {value: string, onDelete: (index: number) => void, index: number}) {
-    const [ticked, setTicked] = useState(false);
-
-    function onTick(button: HTMLButtonElement) {
-        setTicked(!ticked);
-        const currentTicked = !ticked;
-        button.style.backgroundColor = currentTicked ? '#00FF00' : 'transparent';
-    }
+function Item({value, onDelete, onTick, index, tick}: {value: string, onDelete: (index: number) => void, onTick: (index: number) => void, index: number, tick: boolean}) {
+    useEffect(() => {
+        (document.getElementById("btn-delete-" + index) as HTMLButtonElement).style.backgroundColor = tick ? '#00FF00' : 'transparent';
+    }, []);
 
     return (
         <li className="
@@ -18,7 +14,7 @@ function Item({value, onDelete, index}: {value: string, onDelete: (index: number
         ">
             <p className="w-full overflow-hidden">{value}</p>
             <div className="flex item-center">
-                <button onClick={(e) => onTick(e.target as HTMLButtonElement)}
+                <button id={"btn-delete-" + index} onClick={() => onTick(index)}
                     className="
                         w-8 h-8 mx-4
                         bg-tick bg-no-repeat bg-center bg-contain
