@@ -9,11 +9,15 @@ import Footer from '../components/Footer.tsx';
 function HomePage() {
     const [todoLists, setTodoLists] = useState<TodoListType[]>([]);
 
+    // PAGE LOAD
+
     useEffect(() => {
         API.getTodoLists().then((data) => {
             setTodoLists(data);
         });
     }, []);
+
+    // RENDER
 
     const todoListElts = todoLists.map((todoList) => {
         return (

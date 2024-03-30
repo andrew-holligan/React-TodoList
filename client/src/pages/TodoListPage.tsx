@@ -13,12 +13,16 @@ function TodoListPage() {
     const [name, setName] = useState<string>('');
     const [items, setItems] = useState<ItemType[]>([]);
 
+    // PAGE LOAD
+
     useEffect(() => {
         API.getTodoList(id!).then((data) => {
             setName(data.name);
             setItems(data.items);
         });
     }, []);
+
+    // HANDLERS
 
     function deleteItem(index: number){
         const newItems = items.filter((item, i) => i !== index);
@@ -27,7 +31,6 @@ function TodoListPage() {
         });
     }
 
-    // TODO
     function tickItem(index: number){
         const newItems = items.map((item, i) => {
             if(i === index){
@@ -42,6 +45,8 @@ function TodoListPage() {
             setItems(newItems);
         });
     }
+
+    // RENDER
 
     const itemElts = items.map((item, index) => {
         return <Item value={item.value} onDelete={deleteItem} onTick={tickItem} index={index} tick={item.ticked} key={index} />;

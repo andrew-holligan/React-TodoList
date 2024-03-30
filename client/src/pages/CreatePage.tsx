@@ -12,6 +12,8 @@ function CreatePage() {
     const navigate = useNavigate();
     const [items, setItems] = useState<ItemType[]>([]);
 
+    // HANDLERS
+
     function addItem() {
         const item = (document.getElementById('item') as HTMLInputElement).value.trim();
 
@@ -43,7 +45,7 @@ function CreatePage() {
         setItems(newItems);
     }
 
-    async function create() {
+    function create() {
         const name = (document.getElementById('name') as HTMLInputElement).value.trim();
 
         // validation
@@ -61,11 +63,11 @@ function CreatePage() {
         });
     }
 
+    // RENDER
+
     const itemElts = items.map((item, index) => {
         return <Item value={item.value} onDelete={deleteItem} onTick={tickItem} index={index} tick={item.ticked} key={index} />;
     });
-
-    console.log(items);
 
     return (
         <>
