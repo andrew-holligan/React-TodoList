@@ -1,7 +1,15 @@
+import {useState,useEffect} from 'react';
+
 import Header from '../components/Header.tsx';
 import Footer from '../components/Footer.tsx';
 
-async function getTodoLists(): Promise<Object> {
+interface TodoList {
+    _id: string;
+    name: string;
+    items: string[];
+}
+
+async function getTodoLists() {
     return await fetch('http://localhost:5000/', {
         method: 'GET',
     })
@@ -14,6 +22,29 @@ async function getTodoLists(): Promise<Object> {
 }
 
 function Home() {
+    const [todoLists, setTodoLists] = useState<TodoList[]>([]);
+
+    useEffect(() => {
+        getTodoLists().then((data) => {
+            setTodoLists(data);
+        });
+    }, []);
+
+    const todoListsElts = todoLists.map((todoList) => {
+        return (
+            <li key={todoList._id}>
+                <a href=""
+                    className="
+                    flex justify-center items-center
+                    w-80 h-20 
+                    bg-color1 hover:bg-color2
+                    text-color4 text-xl
+                ">
+                    {todoList.name}
+                </a>
+            </li>
+        );
+    });
 
     return (
         <>
@@ -36,6 +67,8 @@ function Home() {
                             ">
                         </a>
                     </li>
+
+                    {todoListsElts}
 
                 </ul>
 

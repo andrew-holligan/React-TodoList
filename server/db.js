@@ -3,15 +3,16 @@ import { MongoClient } from "mongodb";
 const uri =
   "mongodb+srv://***REMOVED***:***REMOVED***@cluster0.vmsxqbo.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 
-const client = new MongoClient(uri);
-
 export class DB {
   static async getDocuments(collectionName) {
+    const client = new MongoClient(uri);
     try {
       await client.connect();
-      const db = client.db("react-todolist");
-      const collection = db.collection(collectionName);
-      const result = collection.find({});
+      const result = await client
+        .db("react-todolist")
+        .collection(collectionName)
+        .find({})
+        .toArray();
       return result;
     } catch (error) {
       console.error(error);
@@ -21,6 +22,7 @@ export class DB {
   }
 
   static async getDocument(collectionName, query) {
+    const client = new MongoClient(uri);
     try {
       await client.connect();
       const db = client.db("react-todolist");
@@ -35,6 +37,7 @@ export class DB {
   }
 
   static async addDocument(collectionName, document) {
+    const client = new MongoClient(uri);
     try {
       await client.connect();
       const db = client.db("react-todolist");

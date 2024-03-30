@@ -16,8 +16,10 @@ app
   // get all todolists
   .get("/", (req, res) => {
     console.log("GET /");
-    const todolists = DB.getDocuments(COLLECTION_NAME);
-    res.json(todolists);
+    DB.getDocuments(COLLECTION_NAME).then((result) => {
+      console.log(result);
+      res.json(result);
+    });
   });
 
 // 'create' route
