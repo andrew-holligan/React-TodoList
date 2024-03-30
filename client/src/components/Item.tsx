@@ -3,7 +3,7 @@ import {useEffect} from 'react';
 function Item({value, onDelete, onTick, index, tick}: {value: string, onDelete: (index: number) => void, onTick: (index: number) => void, index: number, tick: boolean}) {
     useEffect(() => {
         (document.getElementById("btn-delete-" + index) as HTMLButtonElement).style.backgroundColor = tick ? '#00FF00' : 'transparent';
-    }, []);
+    });
 
     return (
         <li className="

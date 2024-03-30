@@ -65,6 +65,8 @@ function CreatePage() {
         return <Item value={item.value} onDelete={deleteItem} onTick={tickItem} index={index} tick={item.ticked} key={index} />;
     });
 
+    console.log(items);
+
     return (
         <>
             <Header />

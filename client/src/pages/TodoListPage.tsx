@@ -29,6 +29,18 @@ function TodoListPage() {
 
     // TODO
     function tickItem(index: number){
+        const newItems = items.map((item, i) => {
+            if(i === index){
+                return {
+                    value: item.value,
+                    ticked: !item.ticked,
+                };
+            }
+            return item;
+        });
+        API.setItemTick(id!, index, newItems[index].ticked).then(() => {
+            setItems(newItems);
+        });
     }
 
     const itemElts = items.map((item, index) => {

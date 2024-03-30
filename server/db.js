@@ -83,11 +83,6 @@ export class DB {
     const query = {
       _id: ObjectId.createFromHexString(id),
     };
-    const update = {
-      $set: {
-        [`items.${itemIndex}.tick`]: tick,
-      },
-    };
 
     try {
       await client.connect();
@@ -95,7 +90,7 @@ export class DB {
       await client
         .db("react-todolist")
         .collection(collectionName)
-        .update(query, update);
+        .updateOne(query, { $set: { [`items.${itemIndex}.ticked`]: tick } });
     } catch (error) {
       console.error(error);
     } finally {
