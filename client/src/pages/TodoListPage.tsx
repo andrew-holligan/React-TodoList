@@ -26,14 +26,22 @@ function TodoListPage() {
     // HANDLERS
 
     function deleteTodoList() {
-        API.deleteTodoList(id!).then(() => {
+        API.deleteTodoList(id!).then((success) => {
+            if (!success) {
+                alert("Error - Failed to delete todo list!");
+                return;
+            }
             navigate('/');
         });
     }
 
     function deleteItem(index: number){
         const newItems = items.filter((item, i) => i !== index);
-        API.deleteItem(id!, index).then(() => {
+        API.deleteItem(id!, index).then((success) => {
+            if (!success) {
+                alert("Error - Failed to delete item!");
+                return;
+            }
             setItems(newItems);
         });
     }
@@ -48,7 +56,11 @@ function TodoListPage() {
             }
             return item;
         });
-        API.setItemTick(id!, index, newItems[index].ticked).then(() => {
+        API.setItemTick(id!, index, newItems[index].ticked).then((success) => {
+            if (!success) {
+                alert("Error - Failed to update item tick status!");
+                return;
+            }
             setItems(newItems);
         });
     }

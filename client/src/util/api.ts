@@ -26,7 +26,7 @@ export class API {
   }
 
   static async createTodoList(name: string, items: ItemType[]): Promise<any> {
-    await fetch("http://localhost:5000/create", {
+    return await fetch("http://localhost:5000/create", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -37,7 +37,10 @@ export class API {
       }),
     })
       .then((response) => {
-        return response;
+        if (response.status === 200) {
+          return true;
+        }
+        return false;
       })
       .catch((error) => {
         console.error(error);
@@ -45,11 +48,14 @@ export class API {
   }
 
   static async deleteItem(id: string, index: number): Promise<any> {
-    await fetch("http://localhost:5000/todolist/" + id + "/" + index, {
+    return await fetch("http://localhost:5000/todolist/" + id + "/" + index, {
       method: "DELETE",
     })
       .then((response) => {
-        return response;
+        if (response.status === 200) {
+          return true;
+        }
+        return false;
       })
       .catch((error) => {
         console.error(error);
@@ -57,11 +63,14 @@ export class API {
   }
 
   static async deleteTodoList(id: string): Promise<any> {
-    await fetch("http://localhost:5000/todolist/" + id, {
+    return await fetch("http://localhost:5000/todolist/" + id, {
       method: "DELETE",
     })
       .then((response) => {
-        return response;
+        if (response.status === 200) {
+          return true;
+        }
+        return false;
       })
       .catch((error) => {
         console.error(error);
@@ -69,7 +78,7 @@ export class API {
   }
 
   static async setItemTick(id: string, index: number, tick: boolean): Promise<any> {
-    await fetch("http://localhost:5000/todolist/" + id + "/" + index, {
+    return await fetch("http://localhost:5000/todolist/" + id + "/" + index, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -79,7 +88,10 @@ export class API {
       }),
     })
       .then((response) => {
-        return response;
+        if (response.status === 200) {
+          return true;
+        }
+        return false;
       })
       .catch((error) => {
         console.error(error);

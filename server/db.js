@@ -46,8 +46,11 @@ export class DB {
         .collection(collectionName)
         .insertOne(document);
 
+      return true;
+
     } catch (error) {
       console.error(error);
+      return false;
     } finally {
       await client.close();
     }
@@ -68,8 +71,11 @@ export class DB {
         .collection(collectionName)
         .deleteOne(query);
 
+      return true;
+
     } catch (error) {
       console.error(error);
+      return false;
     } finally {
       await client.close();
     }
@@ -95,8 +101,11 @@ export class DB {
         .collection(collectionName)
         .updateOne(query, { $pull: { items: null } });
 
+      return true;
+
     } catch (error) {
       console.error(error);
+      return false;
     } finally {
       await client.close();
     }
@@ -117,8 +126,11 @@ export class DB {
         .collection(collectionName)
         .updateOne(query, { $set: { [`items.${itemIndex}.ticked`]: tick } });
 
+      return true;
+
     } catch (error) {
       console.error(error);
+      return false;
     } finally {
       await client.close();
     }

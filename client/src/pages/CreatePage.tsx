@@ -58,7 +58,11 @@ function CreatePage() {
             return;
         }
 
-        API.createTodoList(name, items).then(() => {
+        API.createTodoList(name, items).then((success) => {
+            if (!success) {
+                alert("Error - Could not create Todo List!");
+                return;
+            }
             navigate("/");
         });
     }

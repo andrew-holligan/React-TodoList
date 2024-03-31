@@ -14,7 +14,7 @@ app.options("*", cors());
 app
   // GET request
   // get all todolists
-  .get("/", (req, res) => {
+  .get("/", cors(), (req, res) => {
     console.log("GET /");
 
     DB.getDocuments(COLLECTION_NAME).then((result) => {
@@ -26,12 +26,17 @@ app
 app
   // POST request
   // create a new todolist
-  .post("/create", (req, res) => {
+  .post("/create", cors(), (req, res) => {
     console.log("POST /create");
 
     const todolist = req.body;
-    DB.addDocument(COLLECTION_NAME, todolist).then(() => {
-      res.sendStatus(200);
+
+    DB.addDocument(COLLECTION_NAME, todolist).then((success) => {
+      if (success) {
+        res.sendStatus(200);
+      } else {
+        res.sendStatus(500);
+      }
     });
   });
 
@@ -39,12 +44,12 @@ app
 app
   // GET request
   // get a specific todolist
-  .get("/todolist/:id", (req, res) => {
+  .get("/todolist/:id", cors(), (req, res) => {
     console.log("GET /todolist/:id");
 
     const id = req.params.id;
+
     DB.getDocument(COLLECTION_NAME, id).then((result) => {
-      console.log(result);
       res.json(result);
     });
   });
@@ -53,12 +58,17 @@ app
 app
   // DELETE request
   // delete a specific todolist
-  .delete("/todolist/:id", (req, res) => {
+  .delete("/todolist/:id", cors(), (req, res) => {
     console.log("DELETE /todolist/:id");
 
     const id = req.params.id;
-    DB.deleteTodoList(COLLECTION_NAME, id).then(() => {
-      res.sendStatus(200);
+
+    DB.deleteTodoList(COLLECTION_NAME, id).then((success) => {
+      if (success) {
+        res.sendStatus(200);
+      } else {
+        res.sendStatus(500);
+      }
     });
   });
 
@@ -66,13 +76,18 @@ app
 app
   // DELETE request
   // delete a specific item
-  .delete("/todolist/:id/:itemIndex", (req, res) => {
+  .delete("/todolist/:id/:itemIndex", cors(), (req, res) => {
     console.log("DELETE /todolist/:id/:index (ITEM)");
 
     const id = req.params.id;
     const itemIndex = req.params.itemIndex;
-    DB.deleteItem(COLLECTION_NAME, id, itemIndex).then(() => {
-      res.sendStatus(200);
+
+    DB.deleteItem(COLLECTION_NAME, id, itemIndex).then((success) => {
+      if (success) {
+        res.sendStatus(200);
+      } else {
+        res.sendStatus(500);
+      }
     });
   });
 
@@ -80,15 +95,19 @@ app
 app
   // POST request
   // set tick of specific item in a specific todolist
-  .post("/todolist/:id/:itemIndex", (req, res) => {
+  .post("/todolist/:id/:itemIndex", cors(), (req, res) => {
     console.log("POST /todolist/:id/:itemIndex (TICK)");
 
     const id = req.params.id;
     const itemIndex = req.params.itemIndex;
     const { tick } = req.body;
 
-    DB.setTick(COLLECTION_NAME, id, itemIndex, tick).then(() => {
-      res.sendStatus(200);
+    DB.setTick(COLLECTION_NAME, id, itemIndex, tick).then((success) => {
+      if (success) {
+        res.sendStatus(200);
+      } else {
+        res.sendStatus(500);
+      }
     });
   });
 
