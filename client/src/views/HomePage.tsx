@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 
 import { API } from "../util/api.ts";
-import type { TodoListType } from "../util/types.ts";
+import { TodoList as TodoListType } from "../../../shared/types/general.ts";
 
 import Header from "../components/Header.tsx";
 import Footer from "../components/Footer.tsx";

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { API } from "../util/api.js";
-import type { ItemType } from "../util/types.ts";
+import { Item as ItemType } from "../../../shared/types/general.ts";
 
 import Header from "../components/Header.tsx";
 import Footer from "../components/Footer.tsx";
