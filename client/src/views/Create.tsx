@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { API } from "../util/api.js";
+import { usePostTodoList } from "../api/endpoints/usePostTodoList.ts";
 import { Item as ItemType } from "../../../shared/types/general.ts";
 
 import Header from "../components/Header.tsx";
@@ -9,7 +9,7 @@ import Footer from "../components/Footer.tsx";
 import Item from "../components/Item.tsx";
 import Icon from "../components/Icon.tsx";
 
-function CreatePage() {
+function Create() {
 	const navigate = useNavigate();
 	const [items, setItems] = useState<ItemType[]>([]);
 
@@ -29,12 +29,14 @@ function CreatePage() {
 			return;
 		}
 
-		setItems([...items, { value: item, ticked: false }]);
 		(document.getElementById("item") as HTMLInputElement).value = "";
+
+		setItems([...items, { value: item, ticked: false }]);
 	}
 
 	function deleteItem(index: number) {
-		const newItems = items.filter((item, i) => i !== index);
+		const newItems = items.splice(index, 1);
+
 		setItems(newItems);
 	}
 
@@ -45,6 +47,7 @@ function CreatePage() {
 			}
 			return item;
 		});
+
 		setItems(newItems);
 	}
 
@@ -63,7 +66,7 @@ function CreatePage() {
 			return;
 		}
 
-		API.createTodoList(name, items).then((success) => {
+		usePostTodoList(name, items).then((success) => {
 			if (!success) {
 				alert("Error - Could not create Todo List!");
 				return;
@@ -173,4 +176,4 @@ function CreatePage() {
 	);
 }
 
-export default CreatePage;
+export default Create;

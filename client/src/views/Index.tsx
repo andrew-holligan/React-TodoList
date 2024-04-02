@@ -1,19 +1,19 @@
 import { useState, useEffect } from "react";
 
-import { API } from "../util/api.ts";
+import { useGetTodoLists } from "../api/endpoints/useGetTodolists.ts";
 import { TodoList as TodoListType } from "../../../shared/types/general.ts";
 
 import Header from "../components/Header.tsx";
 import Footer from "../components/Footer.tsx";
 import Icon from "../components/Icon.tsx";
 
-function HomePage() {
+function Index() {
 	const [todoLists, setTodoLists] = useState<TodoListType[]>([]);
 
 	// PAGE LOAD
 
 	useEffect(() => {
-		API.getTodoLists().then((data) => {
+		useGetTodoLists().then((data) => {
 			setTodoLists(data);
 		});
 	}, []);
@@ -73,4 +73,4 @@ function HomePage() {
 	);
 }
 
-export default HomePage;
+export default Index;

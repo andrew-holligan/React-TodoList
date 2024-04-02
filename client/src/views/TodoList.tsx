@@ -1,15 +1,18 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 
-import { API } from "../util/api.ts";
-import type { ItemType } from "../util/types.ts";
+import { useGetTodoList } from "../api/endpoints/useGetTodolist.ts";
+import { useDeleteTodoList } from "../api/endpoints/useDeleteTodoList.ts";
+import { useDeleteItem } from "../api/endpoints/useDeleteItem.ts";
+import { usePutItemTick } from "../api/endpoints/usePutItemTick.ts";
+import { Item as ItemType } from "../../../shared/types/general.ts";
 
 import Header from "../components/Header.tsx";
 import Footer from "../components/Footer.tsx";
 import Item from "../components/Item.tsx";
 import Icon from "../components/Icon.tsx";
 
-function TodoListPage() {
+function TodoList() {
 	const navigate = useNavigate();
 	const { id } = useParams();
 	const [name, setName] = useState<string>("");
@@ -18,7 +21,7 @@ function TodoListPage() {
 	// PAGE LOAD
 
 	useEffect(() => {
-		API.getTodoList(id!).then((data) => {
+		useGetTodoList(id!).then((data) => {
 			setName(data.name);
 			setItems(data.items);
 		});
@@ -27,7 +30,7 @@ function TodoListPage() {
 	// HANDLERS
 
 	function deleteTodoList() {
-		API.deleteTodoList(id!).then((success) => {
+		useDeleteTodoList(id!).then((success) => {
 			if (!success) {
 				alert("Error - Failed to delete todo list!");
 				return;
@@ -37,8 +40,9 @@ function TodoListPage() {
 	}
 
 	function deleteItem(index: number) {
-		const newItems = items.filter((item, i) => i !== index);
-		API.deleteItem(id!, index).then((success) => {
+		const newItems = items.splice(index, 1);
+
+		useDeleteItem(id!, index).then((success) => {
 			if (!success) {
 				alert("Error - Failed to delete item!");
 				return;
@@ -57,7 +61,8 @@ function TodoListPage() {
 			}
 			return item;
 		});
-		API.setItemTick(id!, index, newItems[index].ticked).then((success) => {
+
+		usePutItemTick(id!, index, newItems[index].ticked).then((success) => {
 			if (!success) {
 				alert("Error - Failed to update item tick status!");
 				return;
@@ -116,4 +121,4 @@ function TodoListPage() {
 	);
 }
 
-export default TodoListPage;
+export default TodoList;
