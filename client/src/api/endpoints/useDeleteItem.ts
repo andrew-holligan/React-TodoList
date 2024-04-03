@@ -1,4 +1,4 @@
-import { useApi } from "../fetch.ts";
+import { useApi } from "../useApi.ts";
 
 export async function useDeleteItem(id: string, index: number) {
 	const res = await useApi<boolean>({

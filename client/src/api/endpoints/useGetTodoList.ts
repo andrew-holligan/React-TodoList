@@ -1,4 +1,4 @@
-import { useApi } from "../fetch.ts";
+import { useApi } from "../useApi.ts";
 import { TodoList } from "../../../../shared/types/general.ts";
 
 export async function useGetTodoList(id: string) {

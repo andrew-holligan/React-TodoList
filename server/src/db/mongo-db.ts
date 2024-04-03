@@ -1,22 +1,26 @@
 import { MongoClient } from "mongodb";
 
-interface ClientConnection {
+export interface ClientConnection {
 	client: MongoClient;
 	connected: boolean;
 }
 
-export class MONGO_DB {
+export class Mongo_DB {
 	uri: string;
+	dbName: string;
 	collectionName: string;
 
 	constructor({
 		uri,
+		dbName,
 		collectionName,
 	}: {
 		uri: string;
+		dbName: string;
 		collectionName: string;
 	}) {
 		this.uri = uri;
+		this.dbName = dbName;
 		this.collectionName = collectionName;
 	}
 
@@ -38,5 +42,9 @@ export class MONGO_DB {
 				connected: false,
 			};
 		}
+	}
+
+	getCollection(client: MongoClient) {
+		return client.db(this.dbName).collection(this.collectionName);
 	}
 }

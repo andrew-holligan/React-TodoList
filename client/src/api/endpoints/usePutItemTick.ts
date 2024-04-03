@@ -1,4 +1,4 @@
-import { useApi } from "../fetch.ts";
+import { useApi } from "../useApi.ts";
 
 export async function usePutItemTick(
 	id: string,

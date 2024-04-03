@@ -1,4 +1,4 @@
-import { useApi } from "../fetch.ts";
+import { useApi } from "../useApi.ts";
 import { Item } from "../../../../shared/types/general.ts";
 
 export async function usePostTodoList(name: string, items: Item[]) {
