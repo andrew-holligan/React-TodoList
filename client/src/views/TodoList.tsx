@@ -1,7 +1,7 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 
-import { useGetTodoList } from "../api/endpoints/useGetTodolist.ts";
+import { useGetTodoList } from "../api/endpoints/useGetTodoList.ts";
 import { useDeleteTodoList } from "../api/endpoints/useDeleteTodoList.ts";
 import { useDeleteItem } from "../api/endpoints/useDeleteItem.ts";
 import { usePutItemTick } from "../api/endpoints/usePutItemTick.ts";

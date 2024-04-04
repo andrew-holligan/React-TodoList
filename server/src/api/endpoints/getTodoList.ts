@@ -8,9 +8,12 @@ import { db } from "../../index";
 const getTodoList = Router();
 
 getTodoList.get("/getTodoList", async (req, res) => {
+	console.log("GET /api/getTodoList");
+
 	const id = req.query.id;
 
 	if (typeof id !== "string") {
+		console.error("Invalid query parameters");
 		res.status(400).json({
 			reason: "Invalid query parameters",
 			success: false,
@@ -21,6 +24,7 @@ getTodoList.get("/getTodoList", async (req, res) => {
 	const client = await db.getClient();
 
 	if (!client.connected) {
+		console.error("Database client failed to connect");
 		res.status(500).json({
 			reason: "Database client failed to connect",
 			success: false,
@@ -34,6 +38,7 @@ getTodoList.get("/getTodoList", async (req, res) => {
 	const result = await collection.findOne(identifier);
 
 	if (!result) {
+		console.error("TodoList not found");
 		res.status(404).json({
 			reason: "TodoList not found",
 			success: false,

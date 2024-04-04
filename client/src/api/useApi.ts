@@ -12,22 +12,26 @@ export async function useApi<T>({
 	query?: Record<string, string>;
 }): Promise<SuccessResponse<T> | ErrorResponse> {
 	try {
-		return await fetch(path + new URLSearchParams(query || undefined), {
+		const url = new URL(`${import.meta.env.VITE_APP_URL}${path}`);
+		url.search = new URLSearchParams(query || undefined).toString();
+		console.log(url.href);
+		return await fetch(url, {
 			method,
 			headers: {
 				"Content-Type": "application/json",
 			},
 			body: JSON.stringify(body),
-		}).then((res) => {
+		}).then(async (res) => {
+			const data = await res.json();
 			if (res.ok) {
 				return <SuccessResponse<T>>{
-					data: res.json(),
-					success: true,
+					data: data.data,
+					success: data.success,
 				};
 			} else {
 				return <ErrorResponse>{
-					reason: res.statusText,
-					success: false,
+					reason: data.reason,
+					success: data.success,
 				};
 			}
 		});

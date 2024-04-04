@@ -6,8 +6,8 @@ import { db } from "../../index";
 function isValidItem(item: any): boolean {
 	if (
 		typeof item !== "object" ||
-		typeof item.name !== "string" ||
-		typeof item.completed !== "boolean"
+		typeof item.value !== "string" ||
+		typeof item.ticked !== "boolean"
 	) {
 		return false;
 	}
@@ -17,6 +17,8 @@ function isValidItem(item: any): boolean {
 const postTodoList = Router();
 
 postTodoList.post("/postTodoList", async (req, res) => {
+	console.log("POST /api/postTodoList");
+
 	const { name, items } = req.body;
 
 	if (
@@ -24,6 +26,7 @@ postTodoList.post("/postTodoList", async (req, res) => {
 		!Array.isArray(items) ||
 		!items.every(isValidItem)
 	) {
+		console.error("Invalid TodoList data");
 		res.status(400).json({
 			reason: "Invalid TodoList data",
 			success: false,
@@ -34,6 +37,7 @@ postTodoList.post("/postTodoList", async (req, res) => {
 	const client = await db.getClient();
 
 	if (!client.connected) {
+		console.error("Database client failed to connect");
 		res.status(500).json({
 			reason: "Database client failed to connect",
 			success: false,

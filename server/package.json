@@ -5,8 +5,7 @@
   "main": "dist/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tsc src/index.ts --outDir dist/",
-    "start": "node dist/server/src/index.js",
+    "build": "tsc -p .",
     "dev-start": "ts-node src/index.ts",
     "dev": "nodemon src/index.ts"
   },

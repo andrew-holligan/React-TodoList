@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-import { useGetTodoLists } from "../api/endpoints/useGetTodolists.ts";
+import { useGetTodoLists } from "../api/endpoints/useGetTodoLists.ts";
 import { TodoList as TodoListType } from "../../../shared/types/general.ts";
 
 import Header from "../components/Header.tsx";

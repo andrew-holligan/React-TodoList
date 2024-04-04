@@ -7,9 +7,12 @@ import { db } from "../../index";
 const getTodoLists = Router();
 
 getTodoLists.get("/getTodoLists", async (req, res) => {
+	console.log("GET /api/getTodoLists");
+
 	const client = await db.getClient();
 
 	if (!client.connected) {
+		console.error("Database client failed to connect");
 		res.status(500).json({
 			reason: "Database client failed to connect",
 			success: false,
