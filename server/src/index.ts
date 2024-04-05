@@ -5,6 +5,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const port = process.env.PORT!;
+const clientOrigins = process.env.CLIENT_ORIGIN!.split(",");
 const uri = process.env.MONGODB_URI!;
 const collectionName = process.env.MONGODB_COLLECTION_NAME!;
 const dbName = process.env.MONGODB_DB_NAME!;
@@ -21,7 +22,14 @@ import router from "./api/router";
 
 const app = express();
 app.use(express.json());
-app.use(cors());
+
+// CORS
+app.use(
+	cors({
+		origin: clientOrigins,
+		credentials: true,
+	})
+);
 
 app.use("/api", router);
 
