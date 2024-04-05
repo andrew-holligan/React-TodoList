@@ -21,7 +21,10 @@ getTodoLists.get("/getTodoLists", async (req, res) => {
 	}
 
 	// DB CODE
-	const collection = db.getCollection(client.client);
+	const collection = db.getCollection(
+		client.client,
+		process.env.MONGODB_TODOLIST_COLLECTION_NAME!
+	);
 	const result = await collection.find({}).toArray();
 
 	client.client.close();

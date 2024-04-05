@@ -7,7 +7,6 @@ dotenv.config();
 const port = process.env.PORT!;
 const clientOrigins = process.env.CLIENT_ORIGIN!.split(",");
 const uri = process.env.MONGODB_URI!;
-const collectionName = process.env.MONGODB_COLLECTION_NAME!;
 const dbName = process.env.MONGODB_DB_NAME!;
 
 import { Mongo_DB } from "./db/mongo-db";
@@ -15,7 +14,6 @@ import { Mongo_DB } from "./db/mongo-db";
 export const db = new Mongo_DB({
 	uri: uri,
 	dbName: dbName,
-	collectionName: collectionName,
 });
 
 import routerApi from "./routing/routerApi";

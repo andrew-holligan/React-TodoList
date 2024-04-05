@@ -47,7 +47,10 @@ postTodoList.post("/postTodoList", async (req, res) => {
 	}
 
 	// DB CODE
-	const collection = db.getCollection(client.client);
+	const collection = db.getCollection(
+		client.client,
+		process.env.MONGODB_TODOLIST_COLLECTION_NAME!
+	);
 
 	// VALIDATION
 	const result = await collection.findOne({ name: name });

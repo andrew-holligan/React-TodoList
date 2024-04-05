@@ -8,20 +8,10 @@ export interface ClientConnection {
 export class Mongo_DB {
 	uri: string;
 	dbName: string;
-	collectionName: string;
 
-	constructor({
-		uri,
-		dbName,
-		collectionName,
-	}: {
-		uri: string;
-		dbName: string;
-		collectionName: string;
-	}) {
+	constructor({ uri, dbName }: { uri: string; dbName: string }) {
 		this.uri = uri;
 		this.dbName = dbName;
-		this.collectionName = collectionName;
 	}
 
 	async getClient(): Promise<ClientConnection> {
@@ -44,7 +34,7 @@ export class Mongo_DB {
 		}
 	}
 
-	getCollection(client: MongoClient) {
-		return client.db(this.dbName).collection(this.collectionName);
+	getCollection(client: MongoClient, collectionName: string) {
+		return client.db(this.dbName).collection(collectionName);
 	}
 }

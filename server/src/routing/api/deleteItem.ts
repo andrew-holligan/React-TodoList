@@ -34,7 +34,10 @@ deleteItem.delete("/deleteItem", async (req, res) => {
 
 	// DB CODE
 	const identifier = { _id: ObjectId.createFromHexString(id) };
-	const collection = db.getCollection(client.client);
+	const collection = db.getCollection(
+		client.client,
+		process.env.MONGODB_TODOLIST_COLLECTION_NAME!
+	);
 	await collection.updateOne(identifier, [
 		{
 			$set: {
