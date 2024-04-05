@@ -4,16 +4,15 @@ import { ObjectId } from "mongodb";
 import { SuccessResponse, ErrorResponse } from "../../../../shared/types/api";
 import { db } from "../../index";
 
-const putItemTick = Router();
+const putTodoListName = Router();
 
-putItemTick.put("/putItemTick", async (req, res) => {
-	console.log("PUT /api/putItemTick");
+putTodoListName.put("/putTodoListName", async (req, res) => {
+	console.log("PUT /api/TodoListName");
 
 	const id = req.query.id;
-	const index = req.query.index;
-	const { ticked } = req.body;
+	const { name } = req.body;
 
-	if (typeof id !== "string" || typeof index !== "string") {
+	if (typeof id !== "string") {
 		console.error("Invalid query parameters");
 		res.status(400).json(<ErrorResponse>{
 			reason: "Invalid query parameters",
@@ -22,7 +21,7 @@ putItemTick.put("/putItemTick", async (req, res) => {
 		return;
 	}
 
-	if (typeof ticked !== "boolean") {
+	if (typeof name !== "string") {
 		console.error("Invalid body parameters");
 		res.status(400).json(<ErrorResponse>{
 			reason: "Invalid body parameters",
@@ -46,7 +45,7 @@ putItemTick.put("/putItemTick", async (req, res) => {
 	const identifier = { _id: ObjectId.createFromHexString(id) };
 	const collection = db.getCollection(client.client);
 	await collection.updateOne(identifier, {
-		$set: { [`items.${index}.ticked`]: ticked },
+		$set: { name: name },
 	});
 
 	client.client.close();
@@ -57,4 +56,4 @@ putItemTick.put("/putItemTick", async (req, res) => {
 	});
 });
 
-export default putItemTick;
+export default putTodoListName;

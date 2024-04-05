@@ -6,6 +6,7 @@ import getTodoList from "./endpoints/getTodoList";
 import getTodoLists from "./endpoints/getTodoLists";
 import postTodoList from "./endpoints/postTodoList";
 import putItemTick from "./endpoints/putItemTick";
+import putTodoListName from "./endpoints/putTodoListName";
 
 const router = Router();
 
@@ -15,5 +16,6 @@ router.use(getTodoList);
 router.use(getTodoLists);
 router.use(postTodoList);
 router.use(putItemTick);
+router.use(putTodoListName);
 
 export default router;

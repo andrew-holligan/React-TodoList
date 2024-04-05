@@ -22,10 +22,19 @@ export async function useApi<T>({
 			},
 			body: JSON.stringify(body),
 		}).then(async (res) => {
+			if (res.status === 404) {
+				return <ErrorResponse>{
+					reason: "Resource not found",
+					success: false,
+				};
+			}
+
 			const data = await res.json();
+
 			if (res.ok) {
 				return <SuccessResponse<T>>data;
 			}
+
 			return <ErrorResponse>data;
 		});
 	} catch (error: any) {
