@@ -1,7 +1,40 @@
+import { useNavigate } from "react-router-dom";
+
+import { usePostLogin } from "../routing/auth/usePostLogin.ts";
+
 import Header from "../components/Header.tsx";
 import Footer from "../components/Footer.tsx";
 
 function Login() {
+	const navigate = useNavigate();
+
+	function login() {
+		const username = (
+			document.getElementById("username") as HTMLInputElement
+		).value;
+		const password = (
+			document.getElementById("password") as HTMLInputElement
+		).value;
+
+		// validation
+		if (!username) {
+			alert("Username is required!");
+			return;
+		}
+		if (!password) {
+			alert("Password is required!");
+			return;
+		}
+
+		usePostLogin(username, password).then((res) => {
+			if (!res.success) {
+				alert(res.reason);
+				return;
+			}
+			navigate("/");
+		});
+	}
+
 	return (
 		<>
 			<Header />
@@ -36,6 +69,7 @@ function Login() {
 
 					<button
 						id="btn-login"
+						onClick={login}
 						className="
 							flex justify-center items-center
 							w-80 h-12
