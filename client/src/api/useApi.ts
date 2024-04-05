@@ -14,7 +14,7 @@ export async function useApi<T>({
 	try {
 		const url = new URL(`${import.meta.env.VITE_APP_URL}${path}`);
 		url.search = new URLSearchParams(query || undefined).toString();
-		console.log(url.href);
+
 		return await fetch(url, {
 			method,
 			headers: {
@@ -24,16 +24,9 @@ export async function useApi<T>({
 		}).then(async (res) => {
 			const data = await res.json();
 			if (res.ok) {
-				return <SuccessResponse<T>>{
-					data: data.data,
-					success: data.success,
-				};
-			} else {
-				return <ErrorResponse>{
-					reason: data.reason,
-					success: data.success,
-				};
+				return <SuccessResponse<T>>data;
 			}
+			return <ErrorResponse>data;
 		});
 	} catch (error: any) {
 		console.error(error);

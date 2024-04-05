@@ -25,7 +25,7 @@ function Create() {
 
 		// check for duplicate item
 		if (items.some((itemO) => itemO.value === item)) {
-			alert("Error - Item already exists!");
+			alert("Item already exists!");
 			return;
 		}
 
@@ -58,17 +58,17 @@ function Create() {
 
 		// validation
 		if (!name) {
-			alert("Error - Name is required!");
+			alert("Name is required!");
 			return;
 		}
 		if (items.length === 0) {
-			alert("Error - Items are required!");
+			alert("Items are required!");
 			return;
 		}
 
-		usePostTodoList(name, items).then((success) => {
-			if (!success) {
-				alert("Error - Could not create Todo List!");
+		usePostTodoList(name, items).then((res) => {
+			if (!res.success) {
+				alert(res.reason);
 				return;
 			}
 			navigate("/");

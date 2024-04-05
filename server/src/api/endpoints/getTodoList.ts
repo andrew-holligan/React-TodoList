@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { ObjectId } from "mongodb";
+import { AddToSetOperators, ObjectId } from "mongodb";
 
 import { SuccessResponse, ErrorResponse } from "../../../../shared/types/api";
 import { TodoList } from "../../../../shared/types/general";
@@ -14,10 +14,10 @@ getTodoList.get("/getTodoList", async (req, res) => {
 
 	if (typeof id !== "string") {
 		console.error("Invalid query parameters");
-		res.status(400).json({
+		res.status(400).json(<ErrorResponse>{
 			reason: "Invalid query parameters",
 			success: false,
-		} as ErrorResponse);
+		});
 		return;
 	}
 
@@ -25,10 +25,10 @@ getTodoList.get("/getTodoList", async (req, res) => {
 
 	if (!client.connected) {
 		console.error("Database client failed to connect");
-		res.status(500).json({
+		res.status(500).json(<ErrorResponse>{
 			reason: "Database client failed to connect",
 			success: false,
-		} as ErrorResponse);
+		});
 		return;
 	}
 
@@ -39,19 +39,19 @@ getTodoList.get("/getTodoList", async (req, res) => {
 
 	if (!result) {
 		console.error("TodoList not found");
-		res.status(404).json({
+		res.status(404).json(<ErrorResponse>{
 			reason: "TodoList not found",
 			success: false,
-		} as ErrorResponse);
+		});
 		return;
 	}
 
 	client.client.close();
 
-	res.status(200).json({
-		data: result as unknown as TodoList,
+	res.status(200).json(<SuccessResponse<TodoList>>{
+		data: <TodoList>(<unknown>result),
 		success: true,
-	} as SuccessResponse<TodoList>);
+	});
 });
 
 export default getTodoList;

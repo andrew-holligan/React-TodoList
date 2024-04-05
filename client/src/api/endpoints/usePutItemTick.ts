@@ -5,6 +5,10 @@ export async function usePutItemTick(
 	index: number,
 	ticked: boolean
 ) {
+	console.log(
+		`PUT /api/putItemTick { id: ${id}, index: ${index}, ticked: ${ticked} }`
+	);
+
 	const res = await useApi<boolean>({
 		path: "/api/putItemTick",
 		method: "PUT",
@@ -17,12 +21,9 @@ export async function usePutItemTick(
 		},
 	});
 
-	if (res.success) {
-		console.log(
-			`PUT /api/putItemTick { id: ${id}, index: ${index}, ticked: ${ticked} }`
-		);
-		return res.data;
-	} else {
-		throw new Error(res.reason);
+	if (!res.success) {
+		console.error(res.reason);
 	}
+
+	return res;
 }

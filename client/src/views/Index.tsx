@@ -13,8 +13,12 @@ function Index() {
 	// PAGE LOAD
 
 	useEffect(() => {
-		useGetTodoLists().then((data) => {
-			setTodoLists(data);
+		useGetTodoLists().then((res) => {
+			if (!res.success) {
+				alert(res.reason);
+				return;
+			}
+			setTodoLists(res.data);
 		});
 	}, []);
 

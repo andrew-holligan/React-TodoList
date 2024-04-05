@@ -13,10 +13,10 @@ getTodoLists.get("/getTodoLists", async (req, res) => {
 
 	if (!client.connected) {
 		console.error("Database client failed to connect");
-		res.status(500).json({
+		res.status(500).json(<ErrorResponse>{
 			reason: "Database client failed to connect",
 			success: false,
-		} as ErrorResponse);
+		});
 		return;
 	}
 
@@ -26,10 +26,10 @@ getTodoLists.get("/getTodoLists", async (req, res) => {
 
 	client.client.close();
 
-	res.status(200).json({
-		data: result as unknown as TodoList[],
+	res.status(200).json(<SuccessResponse<TodoList[]>>{
+		data: <TodoList[]>(<unknown>result),
 		success: true,
-	} as SuccessResponse<TodoList[]>);
+	});
 });
 
 export default getTodoLists;

@@ -21,18 +21,22 @@ function TodoList() {
 	// PAGE LOAD
 
 	useEffect(() => {
-		useGetTodoList(id!).then((data) => {
-			setName(data.name);
-			setItems(data.items);
+		useGetTodoList(id!).then((res) => {
+			if (!res.success) {
+				alert(res.reason);
+				return;
+			}
+			setName(res.data.name);
+			setItems(res.data.items);
 		});
 	}, []);
 
 	// HANDLERS
 
 	function deleteTodoList() {
-		useDeleteTodoList(id!).then((success) => {
-			if (!success) {
-				alert("Error - Failed to delete todo list!");
+		useDeleteTodoList(id!).then((res) => {
+			if (!res.success) {
+				alert(res.reason);
 				return;
 			}
 			navigate("/");
@@ -42,9 +46,9 @@ function TodoList() {
 	function deleteItem(index: number) {
 		const newItems = items.splice(index, 1);
 
-		useDeleteItem(id!, index).then((success) => {
-			if (!success) {
-				alert("Error - Failed to delete item!");
+		useDeleteItem(id!, index).then((res) => {
+			if (!res.success) {
+				alert(res.reason);
 				return;
 			}
 			setItems(newItems);
@@ -62,9 +66,9 @@ function TodoList() {
 			return item;
 		});
 
-		usePutItemTick(id!, index, newItems[index].ticked).then((success) => {
-			if (!success) {
-				alert("Error - Failed to update item tick status!");
+		usePutItemTick(id!, index, newItems[index].ticked).then((res) => {
+			if (!res.success) {
+				alert(res.reason);
 				return;
 			}
 			setItems(newItems);

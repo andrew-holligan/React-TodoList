@@ -14,10 +14,10 @@ deleteItem.delete("/deleteItem", async (req, res) => {
 
 	if (typeof id !== "string" || typeof index !== "string") {
 		console.error("Invalid query parameters");
-		res.status(400).json({
+		res.status(400).json(<ErrorResponse>{
 			reason: "Invalid query parameters",
 			success: false,
-		} as ErrorResponse);
+		});
 		return;
 	}
 
@@ -25,10 +25,10 @@ deleteItem.delete("/deleteItem", async (req, res) => {
 
 	if (!client.connected) {
 		console.error("Database client failed to connect");
-		res.status(500).json({
+		res.status(500).json(<ErrorResponse>{
 			reason: "Database client failed to connect",
 			success: false,
-		} as ErrorResponse);
+		});
 		return;
 	}
 
@@ -60,10 +60,10 @@ deleteItem.delete("/deleteItem", async (req, res) => {
 
 	client.client.close();
 
-	res.status(200).json({
+	res.status(200).json(<SuccessResponse<boolean>>{
 		data: true,
 		success: true,
-	} as SuccessResponse<boolean>);
+	});
 });
 
 export default deleteItem;

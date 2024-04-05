@@ -24,13 +24,14 @@ postTodoList.post("/postTodoList", async (req, res) => {
 	if (
 		typeof name !== "string" ||
 		!Array.isArray(items) ||
-		!items.every(isValidItem)
+		!items.every(isValidItem) ||
+		items.length === 0
 	) {
 		console.error("Invalid TodoList data");
-		res.status(400).json({
+		res.status(400).json(<ErrorResponse>{
 			reason: "Invalid TodoList data",
 			success: false,
-		} as ErrorResponse);
+		});
 		return;
 	}
 
@@ -38,23 +39,35 @@ postTodoList.post("/postTodoList", async (req, res) => {
 
 	if (!client.connected) {
 		console.error("Database client failed to connect");
-		res.status(500).json({
+		res.status(500).json(<ErrorResponse>{
 			reason: "Database client failed to connect",
 			success: false,
-		} as ErrorResponse);
+		});
 		return;
 	}
 
 	// DB CODE
 	const collection = db.getCollection(client.client);
+
+	// VALIDATION
+	const result = await collection.findOne({ name: name });
+	if (result) {
+		console.error("TodoList with that name already exists");
+		res.status(400).json(<ErrorResponse>{
+			reason: "TodoList with that name already exists",
+			success: false,
+		});
+		return;
+	}
+
 	await collection.insertOne({ name, items });
 
 	client.client.close();
 
-	res.status(200).json({
+	res.status(200).json(<SuccessResponse<boolean>>{
 		data: true,
 		success: true,
-	} as SuccessResponse<boolean>);
+	});
 });
 
 export default postTodoList;
