@@ -18,7 +18,8 @@ export const db = new Mongo_DB({
 	collectionName: collectionName,
 });
 
-import router from "./api/router";
+import routerApi from "./routing/routerApi";
+import routerAuth from "./routing/routerAuth";
 
 const app = express();
 app.use(express.json());
@@ -31,7 +32,8 @@ app.use(
 	})
 );
 
-app.use("/api", router);
+app.use("/api", routerApi);
+app.use("/auth", routerAuth);
 
 app.listen(port, () => {
 	console.log(`Server is running on port ${port}`);
