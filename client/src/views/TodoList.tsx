@@ -1,11 +1,11 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 
-import { useGetTodoList } from "../api/endpoints/useGetTodoList.ts";
-import { useDeleteTodoList } from "../api/endpoints/useDeleteTodoList.ts";
-import { useDeleteItem } from "../api/endpoints/useDeleteItem.ts";
-import { usePutItemTick } from "../api/endpoints/usePutItemTick.ts";
-import { usePutTodoListName } from "../api/endpoints/usePutTodoListName.ts";
+import { useGetTodoList } from "../routing/api/useGetTodoList.ts";
+import { useDeleteTodoList } from "../routing/api/useDeleteTodoList.ts";
+import { useDeleteItem } from "../routing/api/useDeleteItem.ts";
+import { usePutItemTick } from "../routing/api/usePutItemTick.ts";
+import { usePutTodoListName } from "../routing/api/usePutTodoListName.ts";
 import { Item as ItemType } from "../../../shared/types/general.ts";
 
 import Header from "../components/Header.tsx";
