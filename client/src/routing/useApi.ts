@@ -12,8 +12,6 @@ export async function useApi<T>({
 	query?: Record<string, string>;
 }): Promise<SuccessResponse<T> | ErrorResponse> {
 	try {
-		console.log(import.meta.env.VITE_API_URL);
-
 		const url = new URL(`${import.meta.env.VITE_API_URL}${path}`);
 		url.search = new URLSearchParams(query || undefined).toString();
 
