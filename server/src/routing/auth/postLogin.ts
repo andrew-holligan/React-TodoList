@@ -1,4 +1,4 @@
-import { Router } from "express";
+import { Router, Request, Response } from "express";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
@@ -7,7 +7,7 @@ import { db } from "../../index";
 
 const postLogin = Router();
 
-postLogin.post("/postLogin", async (req, res) => {
+postLogin.post("/postLogin", async (req: Request, res: Response) => {
 	console.log("GET /auth/postLogin");
 
 	const { username, password } = req.body;

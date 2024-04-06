@@ -2,35 +2,37 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { useGetTodoLists } from "../routing/api/useGetTodoLists.ts";
-import { auth } from "../routing/auth/auth.ts";
+import { useAuth } from "../routing/auth/useAuth.ts";
 import { TodoList as TodoListType } from "../../../shared/types/general.ts";
 
 import Header from "../components/Header.tsx";
+import UserHeader from "../components/UserHeader.tsx";
 import Footer from "../components/Footer.tsx";
 import Icon from "../components/Icon.tsx";
 
 function Index() {
 	const navigate = useNavigate();
-
-	// AUTH
-	auth().then((res) => {
-		if (!res.success) {
-			navigate("/login");
-			return;
-		}
-	});
-
+	const [username, setUsername] = useState<string>("");
 	const [todoLists, setTodoLists] = useState<TodoListType[]>([]);
 
 	// PAGE LOAD
 
 	useEffect(() => {
-		useGetTodoLists().then((res) => {
+		useAuth().then((res) => {
 			if (!res.success) {
-				alert(res.reason);
+				navigate("/login");
 				return;
 			}
-			setTodoLists(res.data);
+
+			setUsername(res.data);
+
+			useGetTodoLists().then((res) => {
+				if (!res.success) {
+					alert(res.reason);
+					return;
+				}
+				setTodoLists(res.data);
+			});
 		});
 	}, []);
 
@@ -57,6 +59,8 @@ function Index() {
 	return (
 		<>
 			<Header />
+
+			<UserHeader username={username} />
 
 			<main className="w-full">
 				<ul

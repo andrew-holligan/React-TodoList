@@ -3,7 +3,7 @@ import jwt from "jsonwebtoken";
 import { ErrorResponse } from "../../../../shared/types/api";
 import { Request, Response, NextFunction } from "express";
 
-interface RequestWithJWT extends Request {
+export interface RequestWithJWT extends Request {
 	userId: string;
 	username: string;
 	iat: number;

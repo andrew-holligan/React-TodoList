@@ -1,27 +1,39 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { usePostTodoList } from "../routing/api/usePostTodoList.ts";
-import { auth } from "../routing/auth/auth.ts";
+import { useAuth } from "../routing/auth/useAuth.ts";
 import { Item as ItemType } from "../../../shared/types/general.ts";
 
 import Header from "../components/Header.tsx";
+import UserHeader from "../components/UserHeader.tsx";
 import Footer from "../components/Footer.tsx";
 import Item from "../components/Item.tsx";
 import Icon from "../components/Icon.tsx";
 
 function Create() {
 	const navigate = useNavigate();
+	const [username, setUsername] = useState<string>("");
+	const [items, setItems] = useState<ItemType[]>([]);
 
-	// AUTH
-	auth().then((res) => {
+	// PAGE LOAD
+
+	useEffect(() => {
+		useAuth().then((res) => {
+			if (!res.success) {
+				navigate("/login");
+				return;
+			}
+
+			setUsername(res.data);
+		});
+	}, []);
+
+	useAuth().then((res) => {
 		if (!res.success) {
 			navigate("/login");
-			return;
 		}
 	});
-
-	const [items, setItems] = useState<ItemType[]>([]);
 
 	// HANDLERS
 
@@ -103,6 +115,8 @@ function Create() {
 	return (
 		<>
 			<Header />
+
+			<UserHeader username={username} />
 
 			<main className="flex flex-col items-center gap-8 w-full">
 				<div

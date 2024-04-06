@@ -6,45 +6,46 @@ import { useDeleteTodoList } from "../routing/api/useDeleteTodoList.ts";
 import { useDeleteItem } from "../routing/api/useDeleteItem.ts";
 import { usePutItemTick } from "../routing/api/usePutItemTick.ts";
 import { usePutTodoListName } from "../routing/api/usePutTodoListName.ts";
-import { auth } from "../routing/auth/auth.ts";
+import { useAuth } from "../routing/auth/useAuth.ts";
 import { Item as ItemType } from "../../../shared/types/general.ts";
 
 import Header from "../components/Header.tsx";
+import UserHeader from "../components/UserHeader.tsx";
 import Footer from "../components/Footer.tsx";
 import Item from "../components/Item.tsx";
 import Icon from "../components/Icon.tsx";
 
 function TodoList() {
 	const navigate = useNavigate();
-
-	// AUTH
-	auth().then((res) => {
-		if (!res.success) {
-			navigate("/login");
-			return;
-		}
-	});
-
 	const { id } = useParams();
+	const [username, setUsername] = useState<string>("");
 	const [name, setName] = useState<string>("");
 	const [items, setItems] = useState<ItemType[]>([]);
 
 	// PAGE LOAD
 
 	useEffect(() => {
-		useGetTodoList(id!).then((res) => {
+		useAuth().then((res) => {
 			if (!res.success) {
-				alert(res.reason);
+				navigate("/login");
 				return;
 			}
-			setName(res.data.name);
-			setItems(res.data.items);
+
+			setUsername(res.data);
+
+			useGetTodoList(id!).then((res) => {
+				if (!res.success) {
+					alert(res.reason);
+					return;
+				}
+				setName(res.data.name);
+				setItems(res.data.items);
+			});
 		});
 	}, []);
 
 	// HANDLERS
 
-	// TODO
 	function editTodoListName() {
 		const newName = prompt("Enter new name:")?.trim();
 
@@ -123,6 +124,8 @@ function TodoList() {
 	return (
 		<>
 			<Header />
+
+			<UserHeader username={username} />
 
 			<main className="flex flex-col items-center gap-8 w-full">
 				<header className="flex items-center justify-center my-8">

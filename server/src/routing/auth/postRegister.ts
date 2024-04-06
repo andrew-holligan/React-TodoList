@@ -1,4 +1,4 @@
-import { Router } from "express";
+import { Router, Request, Response } from "express";
 import bcrypt from "bcrypt";
 
 import { SuccessResponse, ErrorResponse } from "../../../../shared/types/api";
@@ -6,7 +6,7 @@ import { db } from "../../index";
 
 const postRegister = Router();
 
-postRegister.post("/postRegister", async (req, res) => {
+postRegister.post("/postRegister", async (req: Request, res: Response) => {
 	console.log("GET /auth/postRegister");
 
 	const { username, password } = req.body;

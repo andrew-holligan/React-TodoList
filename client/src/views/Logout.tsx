@@ -11,6 +11,8 @@ function Logout() {
 		}
 		navigate("/");
 	});
+
+	return <></>;
 }
 
 export default Logout;

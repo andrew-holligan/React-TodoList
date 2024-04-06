@@ -60,8 +60,15 @@ function Register() {
 			<Header />
 
 			<main className="w-full">
-				<header className="flex items-center justify-center my-4">
+				<header className="flex flex-col items-center justify-center my-4 gap-2">
 					<h3 className="text-2xl text-color1">Register</h3>
+
+					<h3 className="text-base text-color4">
+						Been here before?
+						<a href="/login" className="text-color1 ml-1">
+							Login
+						</a>
+					</h3>
 				</header>
 
 				<div className="flex flex-col items-center gap-4">

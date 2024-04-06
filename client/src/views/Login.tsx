@@ -40,8 +40,15 @@ function Login() {
 			<Header />
 
 			<main className="w-full">
-				<header className="flex items-center justify-center my-4">
+				<header className="flex flex-col items-center justify-center my-4 gap-2">
 					<h3 className="text-2xl text-color1">Login</h3>
+
+					<h3 className="text-base text-color4">
+						New here?
+						<a href="/register" className="text-color1 ml-1">
+							Register
+						</a>
+					</h3>
 				</header>
 
 				<div className="flex flex-col items-center gap-4">

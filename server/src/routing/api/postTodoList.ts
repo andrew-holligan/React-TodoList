@@ -1,7 +1,7 @@
-import { Router } from "express";
+import { Router, Response } from "express";
 
 import { SuccessResponse, ErrorResponse } from "../../../../shared/types/api";
-import { auth } from "../auth/auth";
+import { auth, RequestWithJWT } from "../auth/auth";
 import { db } from "../../index";
 
 function isValidItem(item: any): boolean {
@@ -17,61 +17,68 @@ function isValidItem(item: any): boolean {
 
 const postTodoList = Router();
 
-postTodoList.post("/postTodoList", auth, async (req, res) => {
-	console.log("POST /api/postTodoList");
+postTodoList.post(
+	"/postTodoList",
+	auth,
+	async (req: RequestWithJWT, res: Response) => {
+		console.log("POST /api/postTodoList");
 
-	const { name, items } = req.body;
+		const { name, items } = req.body;
 
-	if (
-		typeof name !== "string" ||
-		!Array.isArray(items) ||
-		!items.every(isValidItem) ||
-		items.length === 0
-	) {
-		console.error("Invalid TodoList data");
-		res.status(400).json(<ErrorResponse>{
-			reason: "Invalid TodoList data",
-			success: false,
+		if (
+			typeof name !== "string" ||
+			!Array.isArray(items) ||
+			!items.every(isValidItem) ||
+			items.length === 0
+		) {
+			console.error("Invalid TodoList data");
+			res.status(400).json(<ErrorResponse>{
+				reason: "Invalid TodoList data",
+				success: false,
+			});
+			return;
+		}
+
+		const client = await db.getClient();
+
+		if (!client.connected) {
+			console.error("Database client failed to connect");
+			res.status(500).json(<ErrorResponse>{
+				reason: "Database client failed to connect",
+				success: false,
+			});
+			return;
+		}
+
+		// DB CODE
+		const collection = db.getCollection(
+			client.client,
+			process.env.MONGODB_TODOLIST_COLLECTION_NAME!
+		);
+
+		// VALIDATION
+		const result = await collection.findOne({
+			uid: req.userId,
+			name: name,
 		});
-		return;
-	}
+		if (result) {
+			console.error("TodoList with that name already exists");
+			res.status(400).json(<ErrorResponse>{
+				reason: "TodoList with that name already exists",
+				success: false,
+			});
+			return;
+		}
 
-	const client = await db.getClient();
+		await collection.insertOne({ uid: req.userId, name, items });
 
-	if (!client.connected) {
-		console.error("Database client failed to connect");
-		res.status(500).json(<ErrorResponse>{
-			reason: "Database client failed to connect",
-			success: false,
+		client.client.close();
+
+		res.status(200).json(<SuccessResponse<boolean>>{
+			data: true,
+			success: true,
 		});
-		return;
 	}
-
-	// DB CODE
-	const collection = db.getCollection(
-		client.client,
-		process.env.MONGODB_TODOLIST_COLLECTION_NAME!
-	);
-
-	// VALIDATION
-	const result = await collection.findOne({ name: name });
-	if (result) {
-		console.error("TodoList with that name already exists");
-		res.status(400).json(<ErrorResponse>{
-			reason: "TodoList with that name already exists",
-			success: false,
-		});
-		return;
-	}
-
-	await collection.insertOne({ name, items });
-
-	client.client.close();
-
-	res.status(200).json(<SuccessResponse<boolean>>{
-		data: true,
-		success: true,
-	});
-});
+);
 
 export default postTodoList;
