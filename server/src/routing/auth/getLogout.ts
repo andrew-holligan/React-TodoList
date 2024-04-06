@@ -11,7 +11,11 @@ getLogout.get(
 	async (req: RequestWithJWT, res: Response) => {
 		console.log("GET /auth/getLogout");
 
-		res.clearCookie("token")
+		res.clearCookie("token", {
+			httpOnly: true,
+			sameSite: "none",
+			secure: true,
+		})
 			.status(200)
 			.json(<SuccessResponse<boolean>>{
 				data: true,

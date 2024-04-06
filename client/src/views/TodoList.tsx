@@ -10,6 +10,7 @@ import { useAuth } from "../routing/auth/useAuth.ts";
 import { Item as ItemType } from "../../../shared/types/general.ts";
 
 import Header from "../components/Header.tsx";
+import Loading from "../components/Loading.tsx";
 import UserHeader from "../components/UserHeader.tsx";
 import Footer from "../components/Footer.tsx";
 import Item from "../components/Item.tsx";
@@ -107,6 +108,10 @@ function TodoList() {
 	}
 
 	// RENDER
+
+	if (!username) {
+		return <Loading />;
+	}
 
 	const itemElts = items.map((item, index) => {
 		return (

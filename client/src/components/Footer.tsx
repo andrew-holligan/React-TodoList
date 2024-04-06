@@ -3,7 +3,7 @@ function Footer() {
 		<footer
 			className="
             flex justify-center
-            my-12
+			my-8
         "
 		>
 			<h3 className="text-base text-color4">

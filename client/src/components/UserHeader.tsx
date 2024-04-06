@@ -5,7 +5,7 @@ function UserHeader({ username }: { username: string }) {
 		<header
 			className="
             flex items-center justify-center
-            mb-12 gap-4
+			gap-4
         "
 		>
 			<h3 className="text-2xl text-color1">{username}</h3>

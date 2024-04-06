@@ -6,6 +6,7 @@ import { useAuth } from "../routing/auth/useAuth.ts";
 import { TodoList as TodoListType } from "../../../shared/types/general.ts";
 
 import Header from "../components/Header.tsx";
+import Loading from "../components/Loading.tsx";
 import UserHeader from "../components/UserHeader.tsx";
 import Footer from "../components/Footer.tsx";
 import Icon from "../components/Icon.tsx";
@@ -37,6 +38,10 @@ function Index() {
 	}, []);
 
 	// RENDER
+
+	if (!username) {
+		return <Loading />;
+	}
 
 	const todoListElts = todoLists.map((todoList) => {
 		return (
