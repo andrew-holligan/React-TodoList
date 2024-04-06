@@ -12,7 +12,8 @@ export async function useApi<T>({
 	query?: Record<string, string>;
 }): Promise<SuccessResponse<T> | ErrorResponse> {
 	try {
-		const url = new URL(`${import.meta.env.VITE_APP_URL}${path}`);
+		console.log(process.env.VITE_APP_URL);
+		const url = new URL(`${process.env.VITE_APP_URL}${path}`);
 		url.search = new URLSearchParams(query || undefined).toString();
 
 		return await fetch(url, {
