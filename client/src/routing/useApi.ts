@@ -21,6 +21,7 @@ export async function useApi<T>({
 				"Content-Type": "application/json",
 			},
 			body: JSON.stringify(body),
+			credentials: "include",
 		}).then(async (res) => {
 			if (res.status === 404) {
 				return <ErrorResponse>{

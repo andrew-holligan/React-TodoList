@@ -1,6 +1,7 @@
 import { Router } from "express";
 
 import { SuccessResponse, ErrorResponse } from "../../../../shared/types/api";
+import { auth } from "../auth/auth";
 import { db } from "../../index";
 
 function isValidItem(item: any): boolean {
@@ -16,7 +17,7 @@ function isValidItem(item: any): boolean {
 
 const postTodoList = Router();
 
-postTodoList.post("/postTodoList", async (req, res) => {
+postTodoList.post("/postTodoList", auth, async (req, res) => {
 	console.log("POST /api/postTodoList");
 
 	const { name, items } = req.body;

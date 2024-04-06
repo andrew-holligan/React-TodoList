@@ -2,11 +2,12 @@ import { Router } from "express";
 import { ObjectId } from "mongodb";
 
 import { SuccessResponse, ErrorResponse } from "../../../../shared/types/api";
+import { auth } from "../auth/auth";
 import { db } from "../../index";
 
 const deleteTodoList = Router();
 
-deleteTodoList.delete("/deleteTodoList", async (req, res) => {
+deleteTodoList.delete("/deleteTodoList", auth, async (req, res) => {
 	console.log("DELETE /api/deleteTodoList");
 
 	const id = req.query.id;

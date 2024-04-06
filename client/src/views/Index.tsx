@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 import { useGetTodoLists } from "../routing/api/useGetTodoLists.ts";
+import { auth } from "../routing/auth/auth.ts";
 import { TodoList as TodoListType } from "../../../shared/types/general.ts";
 
 import Header from "../components/Header.tsx";
@@ -8,6 +10,16 @@ import Footer from "../components/Footer.tsx";
 import Icon from "../components/Icon.tsx";
 
 function Index() {
+	const navigate = useNavigate();
+
+	// AUTH
+	auth().then((res) => {
+		if (!res.success) {
+			navigate("/login");
+			return;
+		}
+	});
+
 	const [todoLists, setTodoLists] = useState<TodoListType[]>([]);
 
 	// PAGE LOAD

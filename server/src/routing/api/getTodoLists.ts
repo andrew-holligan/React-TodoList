@@ -2,11 +2,12 @@ import { Router } from "express";
 
 import { SuccessResponse, ErrorResponse } from "../../../../shared/types/api";
 import { TodoList } from "../../../../shared/types/general";
+import { auth } from "../auth/auth";
 import { db } from "../../index";
 
 const getTodoLists = Router();
 
-getTodoLists.get("/getTodoLists", async (req, res) => {
+getTodoLists.get("/getTodoLists", auth, async (req, res) => {
 	console.log("GET /api/getTodoLists");
 
 	const client = await db.getClient();

@@ -2,11 +2,12 @@ import { Router } from "express";
 import { ObjectId } from "mongodb";
 
 import { SuccessResponse, ErrorResponse } from "../../../../shared/types/api";
+import { auth } from "../auth/auth";
 import { db } from "../../index";
 
 const deleteItem = Router();
 
-deleteItem.delete("/deleteItem", async (req, res) => {
+deleteItem.delete("/deleteItem", auth, async (req, res) => {
 	console.log("DELETE /api/deleteItem");
 
 	const id = req.query.id;

@@ -6,6 +6,7 @@ import { useDeleteTodoList } from "../routing/api/useDeleteTodoList.ts";
 import { useDeleteItem } from "../routing/api/useDeleteItem.ts";
 import { usePutItemTick } from "../routing/api/usePutItemTick.ts";
 import { usePutTodoListName } from "../routing/api/usePutTodoListName.ts";
+import { auth } from "../routing/auth/auth.ts";
 import { Item as ItemType } from "../../../shared/types/general.ts";
 
 import Header from "../components/Header.tsx";
@@ -15,6 +16,15 @@ import Icon from "../components/Icon.tsx";
 
 function TodoList() {
 	const navigate = useNavigate();
+
+	// AUTH
+	auth().then((res) => {
+		if (!res.success) {
+			navigate("/login");
+			return;
+		}
+	});
+
 	const { id } = useParams();
 	const [name, setName] = useState<string>("");
 	const [items, setItems] = useState<ItemType[]>([]);

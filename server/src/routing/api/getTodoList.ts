@@ -3,11 +3,12 @@ import { AddToSetOperators, ObjectId } from "mongodb";
 
 import { SuccessResponse, ErrorResponse } from "../../../../shared/types/api";
 import { TodoList } from "../../../../shared/types/general";
+import { auth } from "../auth/auth";
 import { db } from "../../index";
 
 const getTodoList = Router();
 
-getTodoList.get("/getTodoList", async (req, res) => {
+getTodoList.get("/getTodoList", auth, async (req, res) => {
 	console.log("GET /api/getTodoList");
 
 	const id = req.query.id;

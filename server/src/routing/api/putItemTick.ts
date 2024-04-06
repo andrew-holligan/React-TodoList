@@ -2,11 +2,12 @@ import { Router } from "express";
 import { ObjectId } from "mongodb";
 
 import { SuccessResponse, ErrorResponse } from "../../../../shared/types/api";
+import { auth } from "../auth/auth";
 import { db } from "../../index";
 
 const putItemTick = Router();
 
-putItemTick.put("/putItemTick", async (req, res) => {
+putItemTick.put("/putItemTick", auth, async (req, res) => {
 	console.log("PUT /api/putItemTick");
 
 	const id = req.query.id;

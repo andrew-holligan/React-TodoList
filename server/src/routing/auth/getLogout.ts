@@ -1,13 +1,19 @@
 import { Router } from "express";
-import { ObjectId } from "mongodb";
 
-import { SuccessResponse, ErrorResponse } from "../../../../shared/types/api";
-import { db } from "../../index";
+import { SuccessResponse } from "../../../../shared/types/api";
+import { auth } from "./auth";
 
 const getLogout = Router();
 
-getLogout.get("/getLogout", async (req, res) => {
+getLogout.get("/getLogout", auth, async (req, res) => {
 	console.log("GET /auth/getLogout");
+
+	res.clearCookie("token")
+		.status(200)
+		.json(<SuccessResponse<boolean>>{
+			data: true,
+			success: true,
+		});
 });
 
 export default getLogout;

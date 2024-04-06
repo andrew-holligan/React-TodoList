@@ -1,6 +1,6 @@
 import { Router } from "express";
 import bcrypt from "bcrypt";
-import { ObjectId } from "mongodb";
+import jwt from "jsonwebtoken";
 
 import { SuccessResponse, ErrorResponse } from "../../../../shared/types/api";
 import { db } from "../../index";
@@ -72,10 +72,23 @@ postLogin.post("/postLogin", async (req, res) => {
 		return;
 	}
 
-	res.status(200).json(<SuccessResponse<boolean>>{
-		data: true,
-		success: true,
-	});
+	// JWT
+	const token = jwt.sign(
+		{ userId: result._id, username: username },
+		process.env.JWT_SECRET!,
+		{ expiresIn: "24h" }
+	);
+
+	res.cookie("token", token, {
+		httpOnly: true,
+		maxAge: 24 * 60 * 60 * 1000,
+		secure: process.env.NODE_ENV === "production",
+	})
+		.status(200)
+		.json(<SuccessResponse<boolean>>{
+			data: true,
+			success: true,
+		});
 });
 
 export default postLogin;

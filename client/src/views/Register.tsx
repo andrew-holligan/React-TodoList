@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 
 import { usePostRegister } from "../routing/auth/usePostRegister.ts";
+import { usePostLogin } from "../routing/auth/usePostLogin.ts";
 
 import Header from "../components/Header.tsx";
 import Footer from "../components/Footer.tsx";
@@ -42,7 +43,15 @@ function Register() {
 				alert(res.reason);
 				return;
 			}
-			navigate("/");
+
+			usePostLogin(username, password).then((res) => {
+				if (!res.success) {
+					alert(res.reason);
+					return;
+				}
+
+				navigate("/");
+			});
 		});
 	}
 

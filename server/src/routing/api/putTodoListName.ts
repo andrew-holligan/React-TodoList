@@ -2,11 +2,12 @@ import { Router } from "express";
 import { ObjectId } from "mongodb";
 
 import { SuccessResponse, ErrorResponse } from "../../../../shared/types/api";
+import { auth } from "../auth/auth";
 import { db } from "../../index";
 
 const putTodoListName = Router();
 
-putTodoListName.put("/putTodoListName", async (req, res) => {
+putTodoListName.put("/putTodoListName", auth, async (req, res) => {
 	console.log("PUT /api/TodoListName");
 
 	const id = req.query.id;
