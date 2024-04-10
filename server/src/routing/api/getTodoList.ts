@@ -2,7 +2,7 @@ import { Router, Response } from "express";
 import { ObjectId } from "mongodb";
 
 import { SuccessResponse, ErrorResponse } from "../../../../shared/types/api";
-import { TodoList } from "../../../../shared/types/general";
+import { TodoList } from "../../../../shared/types/todolist";
 import { auth, RequestWithJWT } from "../auth/auth";
 import { db } from "../../index";
 
@@ -27,10 +27,10 @@ getTodoList.get(
 
 		const client = await db.getClient();
 
-		if (!client.connected) {
+		if (!client) {
 			console.error("Database client failed to connect");
 			res.status(500).json(<ErrorResponse>{
-				reason: "Database client failed to connect",
+				reason: "Internal server error",
 				success: false,
 			});
 			return;
@@ -42,7 +42,7 @@ getTodoList.get(
 			uid: req.userId,
 		};
 		const collection = db.getCollection(
-			client.client,
+			client,
 			process.env.MONGODB_TODOLIST_COLLECTION_NAME!
 		);
 		const result = await collection.findOne(identifier);
@@ -56,7 +56,7 @@ getTodoList.get(
 			return;
 		}
 
-		client.client.close();
+		client.close();
 
 		res.status(200).json(<SuccessResponse<TodoList>>{
 			data: <TodoList>(<unknown>result),

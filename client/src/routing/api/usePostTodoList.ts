@@ -1,5 +1,5 @@
 import { useApi } from "../useApi.ts";
-import { Item } from "../../../../shared/types/general.ts";
+import { Item } from "../../../../shared/types/todolist.ts";
 
 export async function usePostTodoList(name: string, items: Item[]) {
 	console.log(`POST /api/postTodoList { name: ${name}, items: ${items} }`);

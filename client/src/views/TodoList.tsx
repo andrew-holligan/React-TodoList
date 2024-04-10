@@ -7,7 +7,7 @@ import { useDeleteItem } from "../routing/api/useDeleteItem.ts";
 import { usePutItemTick } from "../routing/api/usePutItemTick.ts";
 import { usePutTodoListName } from "../routing/api/usePutTodoListName.ts";
 import { useAuth } from "../routing/auth/useAuth.ts";
-import { Item as ItemType } from "../../../shared/types/general.ts";
+import { Item as ItemType } from "../../../shared/types/todolist.ts";
 
 import Header from "../components/Header.tsx";
 import Loading from "../components/Loading.tsx";

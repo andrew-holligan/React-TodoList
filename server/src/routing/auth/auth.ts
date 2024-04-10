@@ -19,9 +19,8 @@ export const auth = (
 
 	if (!token) {
 		console.error("No token provided");
-
 		res.status(400).json(<ErrorResponse>{
-			reason: "No token provided",
+			reason: "You are not authenticated",
 			success: false,
 		});
 		return;
@@ -40,9 +39,8 @@ export const auth = (
 		next();
 	} catch (err) {
 		console.error("Invalid token provided");
-
 		res.status(400).json(<ErrorResponse>{
-			reason: "Invalid token provided",
+			reason: "You are not authenticated",
 			success: false,
 		});
 	}

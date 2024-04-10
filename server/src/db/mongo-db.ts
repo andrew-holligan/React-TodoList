@@ -1,36 +1,23 @@
 import { MongoClient } from "mongodb";
 
-export interface ClientConnection {
-	client: MongoClient;
-	connected: boolean;
-}
-
-export class Mongo_DB {
+export class mongoDB {
 	uri: string;
 	dbName: string;
 
-	constructor({ uri, dbName }: { uri: string; dbName: string }) {
+	constructor(uri: string, dbName: string) {
 		this.uri = uri;
 		this.dbName = dbName;
 	}
 
-	async getClient(): Promise<ClientConnection> {
+	async getClient(): Promise<MongoClient | null> {
 		const client = new MongoClient(this.uri);
 
 		try {
 			await client.connect();
-
-			return <ClientConnection>{
-				client: client,
-				connected: true,
-			};
+			return client;
 		} catch (error: any) {
 			console.error(error);
-
-			return <ClientConnection>{
-				client: client,
-				connected: false,
-			};
+			return null;
 		}
 	}
 

@@ -1,5 +1,5 @@
 import { useApi } from "../useApi.ts";
-import { TodoList } from "../../../../shared/types/general.ts";
+import { TodoList } from "../../../../shared/types/todolist.ts";
 
 export async function useGetTodoList(id: string) {
 	console.log(`GET /api/getTodoList { id: ${id} }`);

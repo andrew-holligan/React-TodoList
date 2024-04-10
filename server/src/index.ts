@@ -1,3 +1,5 @@
+// DEPENDENCIES
+
 import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
@@ -5,26 +7,34 @@ import cookieParser from "cookie-parser";
 import dotenv from "dotenv";
 dotenv.config();
 
-const port = process.env.PORT!;
-const clientOrigins = process.env.CLIENT_ORIGIN!.split(",");
-const uri = process.env.MONGODB_URI!;
-const dbName = process.env.MONGODB_DB_NAME!;
+// ENV variables
 
-import { Mongo_DB } from "./db/mongo-db";
+const port = process.env.PORT;
+const clientOriginsStr = process.env.CLIENT_ORIGIN;
+const uri = process.env.MONGODB_URI;
+const dbName = process.env.MONGODB_DB_NAME;
 
-export const db = new Mongo_DB({
-	uri: uri,
-	dbName: dbName,
-});
+if (!port || !clientOriginsStr || !uri || !dbName) {
+	throw new Error("Missing environment variables");
+}
+
+const clientOrigins = clientOriginsStr.split(",");
+
+// DB
+
+import { mongoDB } from "./db/mongo-db";
+
+export const db = new mongoDB(uri, dbName);
+
+// EXPRESS
 
 import routerApi from "./routing/routerApi";
 import routerAuth from "./routing/routerAuth";
 
 const app = express();
+
 app.use(express.json());
 app.use(cookieParser());
-
-// CORS
 app.use(
 	cors({
 		origin: clientOrigins,

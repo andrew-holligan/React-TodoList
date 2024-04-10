@@ -32,10 +32,10 @@ postLogin.post("/postLogin", async (req: Request, res: Response) => {
 
 	const client = await db.getClient();
 
-	if (!client.connected) {
+	if (!client) {
 		console.error("Database client failed to connect");
 		res.status(500).json(<ErrorResponse>{
-			reason: "Database client failed to connect",
+			reason: "Internal server error",
 			success: false,
 		});
 		return;
@@ -43,7 +43,7 @@ postLogin.post("/postLogin", async (req: Request, res: Response) => {
 
 	// DB CODE
 	const collection = db.getCollection(
-		client.client,
+		client,
 		process.env.MONGODB_USER_COLLECTION_NAME!
 	);
 
@@ -58,7 +58,7 @@ postLogin.post("/postLogin", async (req: Request, res: Response) => {
 		return;
 	}
 
-	client.client.close();
+	client.close();
 
 	// COMPARE PASSWORDS
 	const match = await bcrypt.compare(password, result.password);

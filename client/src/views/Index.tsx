@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 import { useGetTodoLists } from "../routing/api/useGetTodoLists.ts";
 import { useAuth } from "../routing/auth/useAuth.ts";
-import { TodoList as TodoListType } from "../../../shared/types/general.ts";
+import { TodoList as TodoListType } from "../../../shared/types/todolist.ts";
 
 import Header from "../components/Header.tsx";
 import Loading from "../components/Loading.tsx";

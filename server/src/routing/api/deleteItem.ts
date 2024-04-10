@@ -27,10 +27,10 @@ deleteItem.delete(
 
 		const client = await db.getClient();
 
-		if (!client.connected) {
+		if (!client) {
 			console.error("Database client failed to connect");
 			res.status(500).json(<ErrorResponse>{
-				reason: "Database client failed to connect",
+				reason: "Internal server error",
 				success: false,
 			});
 			return;
@@ -42,7 +42,7 @@ deleteItem.delete(
 			uid: req.userId,
 		};
 		const collection = db.getCollection(
-			client.client,
+			client,
 			process.env.MONGODB_TODOLIST_COLLECTION_NAME!
 		);
 		await collection.updateOne(identifier, [
@@ -68,7 +68,7 @@ deleteItem.delete(
 			},
 		]);
 
-		client.client.close();
+		client.close();
 
 		res.status(200).json(<SuccessResponse<boolean>>{
 			data: true,
