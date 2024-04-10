@@ -134,29 +134,37 @@ function TodoList() {
 
 			<main className="flex flex-col items-center gap-8 w-full">
 				<header className="flex items-center justify-center my-8">
-					<h1 className="text-4xl text-color1 mr-4">{name}</h1>
+					{name === "" ? (
+						<Loading width={32} height={32} />
+					) : (
+						<>
+							<h1 className="text-4xl text-color1 mr-4">
+								{name}
+							</h1>
 
-					<button
-						onClick={editTodoListName}
-						className="
-						flex items-center justify-center
-						w-8 h-8 
-						bg-[#FFD700] mr-4
-					"
-					>
-						<Icon name="edit" width={24} height={24} />
-					</button>
+							<button
+								onClick={editTodoListName}
+								className="
+								flex items-center justify-center
+								w-8 h-8 
+								bg-[#FFD700] mr-4
+							"
+							>
+								<Icon name="edit" width={24} height={24} />
+							</button>
 
-					<button
-						onClick={deleteTodoList}
-						className="
-						flex items-center justify-center
-						w-8 h-8 
-						bg-[#FF0000]
-                    "
-					>
-						<Icon name="delete" width={24} height={24} />
-					</button>
+							<button
+								onClick={deleteTodoList}
+								className="
+								flex items-center justify-center
+								w-8 h-8 
+								bg-[#FF0000]
+							"
+							>
+								<Icon name="delete" width={24} height={24} />
+							</button>
+						</>
+					)}
 				</header>
 
 				<ol
