@@ -77,9 +77,9 @@ function Register() {
 						id="username"
 						placeholder="Username"
 						className="
-                            w-80 h-12 
-                            border-2 border-solid border-color1 
-                            text-color1 px-4
+						w-80 h-12 
+						border-2 border-solid border-color1 
+						text-color1 px-4
                     "
 					/>
 
@@ -88,9 +88,9 @@ function Register() {
 						id="password"
 						placeholder="Password"
 						className="
-                            w-80 h-12 
-                            border-2 border-solid border-color1 
-                            text-color1 px-4
+						w-80 h-12 
+						border-2 border-solid border-color1 
+						text-color1 px-4
                     "
 					/>
 
@@ -99,9 +99,9 @@ function Register() {
 						id="confirm-password"
 						placeholder="Confirm Password"
 						className="
-                            w-80 h-12 
-                            border-2 border-solid border-color1 
-                            text-color1 px-4
+						w-80 h-12 
+						border-2 border-solid border-color1 
+						text-color1 px-4
                     "
 					/>
 
@@ -109,10 +109,11 @@ function Register() {
 						id="btn-register"
 						onClick={register}
 						className="
-							flex justify-center items-center
-							w-80 h-12
-							bg-color1 hover:bg-color2
-							text-color4"
+						flex justify-center items-center
+						w-80 h-12
+						bg-color1 hover:bg-color2
+						text-color4
+					"
 					>
 						Register
 					</button>

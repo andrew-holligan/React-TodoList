@@ -58,7 +58,7 @@ function Create() {
 	}
 
 	function deleteItem(index: number) {
-		const newItems = items.splice(index, 1);
+		const newItems = items.filter((_, i) => i !== index);
 
 		setItems(newItems);
 	}
@@ -101,7 +101,7 @@ function Create() {
 	// RENDER
 
 	if (!username) {
-		return <Loading />;
+		return <Loading width={96} height={96} />;
 	}
 
 	const itemElts = items.map((item, index) => {
@@ -137,9 +137,9 @@ function Create() {
 						id="name"
 						placeholder="name"
 						className="
-                            w-80 h-12 
-                            border-2 border-solid border-color1 
-                            text-color1 px-4
+						w-80 h-12 
+						border-2 border-solid border-color1 
+						text-color1 px-4
                     "
 					/>
 				</div>
@@ -158,9 +158,9 @@ function Create() {
 							id="item"
 							placeholder="item"
 							className="
-                                w-50 h-12 
-                                border-2 border-solid border-color1 
-                                text-color1 px-4
+							w-50 h-12 
+							border-2 border-solid border-color1 
+							text-color1 px-4
                         "
 						/>
 
@@ -168,9 +168,9 @@ function Create() {
 							id="btn-add"
 							onClick={() => addItem()}
 							className="
-                                flex justify-center items-center
-                                w-20 h-12 
-                                bg-color1 hover:bg-color2
+							flex justify-center items-center
+							w-20 h-12 
+							bg-color1 hover:bg-color2
                         "
 						>
 							<Icon name="add" width={24} height={24} />
@@ -191,10 +191,11 @@ function Create() {
 					id="btn-create"
 					onClick={create}
 					className="
-                        flex justify-center items-center
-                        w-80 h-12
-                        bg-color1 hover:bg-color2
-                        text-color4"
+					flex justify-center items-center
+					w-80 h-12
+					bg-color1 hover:bg-color2
+					text-color4
+				"
 				>
 					Create
 				</button>

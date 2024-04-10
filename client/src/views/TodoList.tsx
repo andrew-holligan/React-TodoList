@@ -76,7 +76,7 @@ function TodoList() {
 	}
 
 	function deleteItem(index: number) {
-		const newItems = items.splice(index, 1);
+		const newItems = items.filter((_, i) => i !== index);
 
 		useDeleteItem(id!, index).then((res) => {
 			if (!res.success) {
@@ -110,7 +110,7 @@ function TodoList() {
 	// RENDER
 
 	if (!username) {
-		return <Loading />;
+		return <Loading width={96} height={96} />;
 	}
 
 	const itemElts = items.map((item, index) => {
@@ -139,9 +139,9 @@ function TodoList() {
 					<button
 						onClick={editTodoListName}
 						className="
-							flex items-center justify-center
-							w-8 h-8 
-							bg-[#FFD700] mr-4
+						flex items-center justify-center
+						w-8 h-8 
+						bg-[#FFD700] mr-4
 					"
 					>
 						<Icon name="edit" width={24} height={24} />
@@ -150,9 +150,9 @@ function TodoList() {
 					<button
 						onClick={deleteTodoList}
 						className="
-							flex items-center justify-center
-                            w-8 h-8 
-                            bg-[#FF0000]
+						flex items-center justify-center
+						w-8 h-8 
+						bg-[#FF0000]
                     "
 					>
 						<Icon name="delete" width={24} height={24} />
@@ -165,7 +165,18 @@ function TodoList() {
                     w-full px-20 gap-8
                 "
 				>
-					{itemElts}
+					{items.length === 0 ? (
+						<li
+							className="
+							flex flex-row justify-center items-center 
+            				min-w-80 h-12
+						"
+						>
+							<Loading width={32} height={32} />
+						</li>
+					) : (
+						itemElts
+					)}
 				</ol>
 			</main>
 

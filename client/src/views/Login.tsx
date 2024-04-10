@@ -57,9 +57,9 @@ function Login() {
 						id="username"
 						placeholder="Username"
 						className="
-                            w-80 h-12 
-                            border-2 border-solid border-color1 
-                            text-color1 px-4
+						w-80 h-12 
+						border-2 border-solid border-color1 
+						text-color1 px-4
                     "
 					/>
 
@@ -68,9 +68,9 @@ function Login() {
 						id="password"
 						placeholder="Password"
 						className="
-                            w-80 h-12 
-                            border-2 border-solid border-color1 
-                            text-color1 px-4
+						w-80 h-12 
+						border-2 border-solid border-color1 
+						text-color1 px-4
                     "
 					/>
 
@@ -78,10 +78,11 @@ function Login() {
 						id="btn-login"
 						onClick={login}
 						className="
-							flex justify-center items-center
-							w-80 h-12
-							bg-color1 hover:bg-color2
-							text-color4"
+						flex justify-center items-center
+						w-80 h-12
+						bg-color1 hover:bg-color2
+						text-color4
+					"
 					>
 						Login
 					</button>

@@ -1,10 +1,12 @@
-function Loading() {
+function Loading({ width, height }: { width: number; height: number }) {
 	return (
 		<>
 			{/* credit: https://flowbite.com/docs/components/spinner/ */}
 			<svg
 				aria-hidden="true"
-				className="inline w-24 h-24 animate-spin dark:text-color2 fill-color1"
+				width={width}
+				height={height}
+				className="inline animate-spin dark:text-color2 fill-color1"
 				viewBox="0 0 100 101"
 			>
 				<path

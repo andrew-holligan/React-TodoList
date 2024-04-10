@@ -40,7 +40,7 @@ function Index() {
 	// RENDER
 
 	if (!username) {
-		return <Loading />;
+		return <Loading width={96} height={96} />;
 	}
 
 	const todoListElts = todoLists.map((todoList) => {
@@ -49,10 +49,10 @@ function Index() {
 				<a
 					href={"/todolist/" + todoList._id}
 					className="
-                    flex justify-center items-center
-                    w-80 h-20 
-                    bg-color1 hover:bg-color2
-                    text-color4 text-xl
+					flex justify-center items-center
+					w-80 h-20 
+					bg-color1 hover:bg-color2
+					text-color4 text-xl
                 "
 				>
 					{todoList.name}
@@ -70,8 +70,8 @@ function Index() {
 			<main className="w-full">
 				<ul
 					className="
-                    flex flex-row justify-center flex-wrap 
-                    w-full px-16 gap-8
+					flex flex-row justify-center flex-wrap 
+					w-full px-16 gap-8
                 "
 				>
 					<li className="list-none">
@@ -79,17 +79,28 @@ function Index() {
 							id="btn-create"
 							href="/create"
 							className="
-                                flex justify-center items-center
-                                w-80 h-20 
-                                bg-color2
-                            "
+							flex justify-center items-center
+							w-80 h-20 
+							bg-color2
+                        "
 						>
 							<h2 className="text-color4 text-xl mr-4">Create</h2>
 							<Icon name="create" width={32} height={32} />
 						</a>
 					</li>
 
-					{todoListElts}
+					{todoLists.length === 0 ? (
+						<li
+							className="
+							flex justify-center items-center
+							w-80 h-20
+						"
+						>
+							<Loading width={32} height={32} />
+						</li>
+					) : (
+						todoListElts
+					)}
 				</ul>
 			</main>
 
